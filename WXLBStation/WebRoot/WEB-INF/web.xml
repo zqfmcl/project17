@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  <servlet>
+    <servlet-name>LiveBLgnServlet</servlet-name>
+    <servlet-class>com.lckj.wechat.servlet.LiveBLgnServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>LiveBOSLoginServlet</servlet-name>
+    <servlet-class>com.lckj.wechat.servlet.LiveBOSLoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ConnWechatServlet</servlet-name>
+    <servlet-class>com.lckj.wechat.servlet.ConnWechatServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>WxNoticeDeal</servlet-name>
+    <servlet-class>com.lckj.wechat.servlet.WxNoticeDeal</servlet-class>
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>LiveBLgnServlet</servlet-name>
+    <url-pattern>/LiveBLgnServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LiveBOSLoginServlet</servlet-name>
+    <url-pattern>/LiveBOSLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ConnWechatServlet</servlet-name>
+    <url-pattern>/ConnWechatServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>WxNoticeDeal</servlet-name>
+    <url-pattern>/WxNoticeDeal</url-pattern>
+  </servlet-mapping>
+
+</web-app>

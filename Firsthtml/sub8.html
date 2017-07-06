@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+<title>山东医专图书馆</title>
+<style type="text/css">
+	body{
+	background-color: #FFFFFF;
+	display: block;
+}
+input,button,select,textarea{outline:none}
+#contain{
+	width: 1424px;
+	height: auto;
+	margin: 0 auto;
+	background-color: #f4f4f4;
+}
+#lib_head{
+	width: 1424px;
+	height: 248px;
+	background-image: url(../../images/lib/lib_head.gif);
+}
+.lib_logo{
+	width: 92px;
+	height: 92px;
+	margin-left: 107px;
+	margin-top: 86px;
+	position: absolute;
+}
+.lib_text{
+	width: 667px;
+	height: 80px;
+	position: absolute;
+	margin-left: 250px;
+	margin-top: 100px;
+}
+#lib_nav{
+	width: 1424px;
+	height: 50px;
+	border-bottom: 1px #ccc solid;
+}
+#lib_nav ul{
+	width: 1190px;
+    height: 50px;
+    margin: 0 auto;
+}
+#lib_nav ul li{
+	width: 148px;
+	height:50px; 
+	display: block;
+	float: left;
+    border-left: 1px #ccc solid;
+    font-size: 16px;
+    font-family: "Microsoft YaHei";
+    color: rgb( 85, 85, 85 );
+   text-align: center;
+   position: relative;
+   /*padding-top: 16px;*/
+}
+#lib_nav ul li a{
+	width: 148px;
+	height: 35px;
+	position: relative;
+	display: block;
+	padding-top: 15px;
+}
+#lib_nav ul li a:hover{
+	color: #FFFFFF;
+	text-decoration: none;
+	background-color: #5a7aea;
+}
+#lib_content{
+	width: 1190px;
+	height: 880px;
+	margin-top: 20px;
+	margin-left: 117px;
+}
+#lib_content1{
+	width: 1190px;
+	height: 143px;
+	background-color: #3657b0;
+}
+#lib_content1_nav{
+	width: 780px;
+	height: 60px;
+	/*background-color: red;*/
+	margin-left: 200px;
+}
+#lib_content1_nav ul li {
+	display: block;
+	float: left;
+	font-size: 16px;
+	color: #FFFFFF;
+	font-family: 'Microsoft YaHei';
+	width: 90px;
+	height: 35px;
+	padding-top: 25px;
+	/*background-color: red;*/
+}
+.lib_content1_nav_jian{
+	width: 21px;
+	height: 10px;
+	margin-left: 20px;
+	display: none;
+}
+#lib_content1_search{
+	width: 780px;
+	height: 60px;
+	margin-left: 200px;
+	margin-top: 5px;
+}
+#lib_content1_search_advance{
+	width: 80px;
+	height: 20px;
+	margin-top: 12px;
+	color: #FFFFFF;
+	font-size: 16px;
+	float: left;
+   font-family: "Microsoft YaHei";
+   margin-left: 25px;
+}
+#lib_content2{
+	width: 1190px;
+	height: 480px;
+	margin-top: 20px;
+}
+#lib_content2_left{
+	width: 890px;
+	height: 480px;
+	float: left;
+}
+#lib_content2_left_pic{
+	width: 886px;
+	height: 301px;
+}
+#lib_content2_left_text{
+	width: 890px;
+	height: 154px;
+	margin-top: 5px;
+
+}
+#lib_content2_right{
+	width: 286px;
+	height: 460px;
+	float: left;
+	margin-left: 6px;
+	border-left: 1px #ccc solid;
+	border-right: 1px #ccc solid;
+	border-bottom: 1px #ccc solid;
+}
+.lib_list_pic{
+	width: 147px;
+	height: 154px;
+	float: left;
+	margin-left: 1px;
+}
+.lib_list_pic_child{
+	width: 147px;
+	height: 40px;
+	display: none;
+	margin-top: 154px;
+	z-index: 1;
+	position: relative;
+}
+#lib_content2_left_text li{
+	display: block;
+	float: left;
+}
+#lib_content2_right_line{
+	width: 100%;
+	height: 4px;
+	background-color: #5a7aea;
+	z-index: -1;
+}
+#lib_content2_right_top{
+	height: 50px;
+	width: 286px;
+	background-color: #f5f5f5;
+	border-bottom: 1px #ccc solid;
+}
+#lib_content2_right_content{
+	width: 250px;
+	height: 370px;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+#lib_content2_right_content ul li{
+	width: 250px;
+	height: 65px;
+}
+
+#content3{
+	width: 1190px;
+	height: 234px;
+	border-left: 1px #ccc solid;
+	border-right: 1px #ccc solid;
+	border-bottom: 1px #ccc solid;
+}
+#content_line{
+	width: 100%;
+	height: 3px;
+	background-color: #5979e8;
+}
+#content3_pic{
+	width: 1190px;
+	height: 181px;
+	margin-top: 20px;
+	overflow: hidden;
+}
+.content3_pic_img{
+	width: 256px;
+	height: 181px;
+	float: left;
+	display: block;
+	margin-left: 30px;
+}
+#lib_foot{
+	width: 1424px;
+	height: 76px;
+	margin: 0 auto;
+	background-color: #3657b0;
+}
+#lib_foot_text{
+	text-align: center;
+	position: relative;
+	margin: 0px auto;
+	padding-top: 30px;
+	height: 20px;
+	width: 1190px;
+	display: block;
+	font-size: 12px;
+   font-family: "SimSun";
+   color: rgb( 255, 255, 255 );
+}
+.lib_list_pic_child1{
+	height: 31px;
+	display: block;
+	float: left;
+	width: 147px;
+	background-color:#90ba4d;
+	margin-top: 2px;
+	font-size: 16px;
+	font-family: 'Microsoft YaHei';
+	text-align: center;
+	padding-top: 5px;
+	color: #FFFFFF;
+}
+.lib_list_pic_child2{
+	height: 31px;
+	display: block;
+	float: left;
+	width: 147px;
+	background-color:#b973c4;
+	margin-top: 2px;
+	font-size: 16px;
+	font-family: 'Microsoft YaHei';
+	text-align: center;
+	padding-top: 5px;
+	color: #FFFFFF;
+}
+.lib_list_pic_child3{
+	height: 31px;
+	display: block;
+	float: left;
+	width: 147px;
+	background-color:#3aabb5;
+	margin-top: 2px;
+	font-size: 16px;
+	font-family: 'Microsoft YaHei';
+	text-align: center;
+	padding-top: 5px;
+	color: #FFFFFF;
+}
+.lib_list_pic_child4{
+	height: 31px;
+	display: block;
+	float: left;
+	width: 147px;
+	background-color:#e27594;
+	margin-top: 2px;
+	font-size: 16px;
+	font-family: 'Microsoft YaHei';
+	text-align: center;
+	padding-top: 5px;
+	color: #FFFFFF;
+}
+.lib_list_pic_child5{
+	height: 31px;
+	display: block;
+	float: left;
+	width: 147px;
+	background-color:#4d69ba;
+	margin-top: 2px;
+	font-size: 16px;
+	font-family: 'Microsoft YaHei';
+	text-align: center;
+	padding-top: 5px;
+	color: #FFFFFF;
+}
+.lib_list_pic_child6{
+	height: 31px;
+	display: block;
+	float: left;
+	width: 147px;
+	background-color:#ba834d;
+	margin-top: 2px;
+	font-size: 16px;
+	font-family: 'Microsoft YaHei';
+	text-align: center;
+	padding-top: 5px;
+	color: #FFFFFF;
+}
+/*list.html css*/
+#lib_list_content{
+	width: 1190px;
+	height: 900px;
+	margin-left: 117px;
+	margin-top: 20px;
+}
+#lib_list_content_top{
+	width: 1190px;
+	height: 30px;
+	font-size: 16px;
+	font-family: 'Microsoft YaHei';
+}
+#lib_list_content_line{
+	width: 1190px;
+	height: 4px;
+	background-color: #5472da;
+}
+#lib_list_content_text{
+	width: 1188px;
+	height: 820px;
+    border-left: 1px #ccc solid;
+	border-right: 1px #ccc solid;
+	border-bottom: 1px #ccc solid;	
+	background-color: #FFFFFF;
+}
+#lib_list_content_text_top{
+	width: 1188px;
+	height: 55px;
+	border-bottom: 1px #ccc solid;	
+	background-color: #f4f4f4;
+}
+#lib_list_content_text_top label{
+color: #555555;
+font-size:20px;
+display: block;
+margin-top:12px;
+margin-left: 30px;
+position: absolute;
+font-family: 'Microsoft YaHei';
+}
+#lib_list_content_text_list{
+	width: 1150px;
+	height: 755px;
+	margin-left: 30px;
+}
+#lib_list_content_text_list ul li{
+	border-bottom: 1px #ccc solid;	
+	height: 112px;
+	list-style: none;
+}
+/*show.html css*/
+#lib_show_content{
+	width: 1190px;
+	height: auto;
+	margin-left: 117px;
+	margin-top: 50px;
+	background-color: #FFFFFF;
+}
+#lib_show_content_line{
+	width: 1190px;
+	height: 4px;
+	background-color: #5472da;
+}
+#lib_show_content_top{
+	width: 1115px;
+	height: 55px;
+	border-bottom: 1px #ccc solid;	
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 40px;
+	font-family: 'Microsoft YaHei';
+	font-size: 19px;
+}
+#lib_show_content_detail{
+	width: 1115px;
+	height: auto;
+	margin-top: 30px;
+	margin-bottom: 40px;
+    font-family: "SimSun";
+	font-size: 18px;
+	color: #000000;
+	padding-left: 40px;
+}
+</style>
+</head>
+<body>
+<div id="contain">
+
+	<div id="lib_head">
+		<div class="lib_logo"><img src="http://www.sdmc.edu.cn/statics/images/lib/lib_logo.png"></div>
+		<div class="lib_text"><img src="http://www.sdmc.edu.cn/statics/images/lib/lib_text.png"></div>
+	</div>
+	<div id="lib_nav">
+		<ul>
+			                                               <li><a href="http://tsg.sdmc.edu.cn/">首页</a></li>
+                                            <li><a href="http://tsg.sdmc.edu.cn/html/lib_zydh/">资源导航</a></li>
+                                            <li><a href="http://tsg.sdmc.edu.cn/html/lib_info/">图书馆简介</a></li>
+                                            <li><a href="http://tsg.sdmc.edu.cn/html/lib_tsgdt/">图书馆动态</a></li>
+                                            <li><a href="http://211.64.79.191:8080/reader/login.php">我的图书馆</a></li>
+                                            <li><a href="http://tsg.sdmc.edu.cn/html/lib_connect/">联系我们</a></li>
+                                      
+               			<li><a id="timeshow" style="width: 188px; background-color: #f4f4f4; color:#444; display: block;"></a></li>
+		</ul>
+	</div>
+       <div id="lib_content">
+    <div id="lib_content1">
+           <div id="lib_content1_nav">
+            <ul>
+                                                              <li> 
+                         <div class="lib_lib">                     
+                             <a href="http://211.64.79.191:8080/opac/search.php" style="color: #ffffff"> 图书检索</a>                          
+                         </div>
+                          <div class="lib_content1_nav_jian"><img src="http://www.sdmc.edu.cn/statics/images/lib/lib_jian.png"></div>
+                        </li>
+                                              <li> 
+                         <div class="lib_lib">                     
+                             <a href="http://www.duxiu.com" style="color: #ffffff"> 读秀学术</a>                          
+                         </div>
+                          <div class="lib_content1_nav_jian"><img src="http://www.sdmc.edu.cn/statics/images/lib/lib_jian.png"></div>
+                        </li>
+                                              <li> 
+                         <div class="lib_lib">                     
+                             <a href="http://c.wanfangdata.com.cn/Periodical.aspx" style="color: #ffffff"> 电子期刊</a>                          
+                         </div>
+                          <div class="lib_content1_nav_jian"><img src="http://www.sdmc.edu.cn/statics/images/lib/lib_jian.png"></div>
+                        </li>
+                                              <li> 
+                         <div class="lib_lib">                     
+                             <a href="http://video.wanfangdata.com.cn/" style="color: #ffffff"> 医学视频</a>                          
+                         </div>
+                          <div class="lib_content1_nav_jian"><img src="http://www.sdmc.edu.cn/statics/images/lib/lib_jian.png"></div>
+                        </li>
+                                              <li> 
+                         <div class="lib_lib">                     
+                             <a href="http://www.chaoxing.com/" style="color: #ffffff"> 电子图书</a>                          
+                         </div>
+                          <div class="lib_content1_nav_jian"><img src="http://www.sdmc.edu.cn/statics/images/lib/lib_jian.png"></div>
+                        </li>
+                                              <li> 
+                         <div class="lib_lib">                     
+                             <a href="http://lczl.med.wanfangdata.com.cn/" style="color: #ffffff"> 临床诊疗库</a>                          
+                         </div>
+                          <div class="lib_content1_nav_jian"><img src="http://www.sdmc.edu.cn/statics/images/lib/lib_jian.png"></div>
+                        </li>
+                                      
+                  
+            </ul>
+         </div>
+         <div id="lib_content1_search">
+           <form action="http://www.sdmc.edu.cn/index.php" method="get" target="_blank">               
+                <input type="hidden" name="m" value="search"/>
+                <input type="hidden" name="c" value="index"/>
+                <input type="hidden" name="a" value="init"/>
+                <input type="hidden" name="typeid" value="1" id="typeid"/>
+                <input type="hidden" name="siteid" value="5" id="siteid"/>
+                <div class="inputcss1" style="width: 540px; height: 48px; float: left; background-image: url(http://www.sdmc.edu.cn/statics/images//lib/lib_bg_search.png);">
+                <input type="text" name="q" id="q"  class="search-input" value="输入关键词..." onfocus="if(this.value=='输入关键词...'){this.value='';this.style.color='#444';}" onblur="if(this.value==''){this.value='输入关键词...';this.style.color='#999';}" style="color:#999999; width: 530px; height: 40px; display: block;position: absolute; margin-top: 5px;border: 0px; font-size:15px;font-family: 'Microsoft YaHei'; padding-left: 10px;"/>         </div>
+                <div style="width:240px; height: 48px;margin-left: 540px;">
+                <!--   <input name="search-btn" type="image" src="http://www.sdmc.edu.cn/statics/images/lib/lib_bt_search.png" style="cursor: hand;width:132px; height:48px; display: block;float: left;"> -->
+                  <a href="http://www.duxiu.com/" style="cursor: hand;width:132px; height:48px; display: block;float: left; background-image: url(http://www.sdmc.edu.cn/statics/images/lib/lib_bt_search.png);">
+                 <a href="http://book.duxiu.com/advsearchpatent.jsp" id="lib_content1_search_advance">高级搜索</a>
+                </div>                
+             </form>
+         </div>
+    </div>
+    <div id="lib_content2">
+        <div id="lib_content2_left">
+             
+                                     <div id="lib_content2_left_pic">
+                        <img src="http://www.sdmc.edu.cn/uploadfile/2017/0113/thumb_886_0_20170113093742364.gif" style="width: 886px;height: 301px"/>
+                       </div>
+                                      <div id="lib_content2_left_text">
+            <ul>
+                                                                                            <li>  <div class="lib_list_pic">
+                           <img src="http://www.sdmc.edu.cn/uploadfile/2017/0112/20170112050252261.jpg">
+                        </div>
+                        <div class="lib_list_pic_child">
+                            <ul>
+                                                              
+                                <li class="lib_list_pic_child1">
+                                   <a href="http://211.64.79.191:8080/opac/search.php" style="color: #ffffff"> 汇文图书</a>
+                                </li>
+                                  
+                                <li class="lib_list_pic_child1">
+                                   <a href="http://211.64.72.6:8080/" style="color: #ffffff"> 超星图书</a>
+                                </li>
+                                                                                      </ul>       
+                        </div>
+                        </li>
+                                                                <li>  <div class="lib_list_pic">
+                           <img src="http://www.sdmc.edu.cn/uploadfile/2017/0112/20170112050334536.jpg">
+                        </div>
+                        <div class="lib_list_pic_child">
+                            <ul>
+                                                              
+                                <li class="lib_list_pic_child2">
+                                   <a href="http://211.64.72.6:8088/C/Periodical.aspx" style="color: #ffffff"> 期刊内网</a>
+                                </li>
+                                  
+                                <li class="lib_list_pic_child2">
+                                   <a href="http://g.wanfangdata.com.cn/" style="color: #ffffff"> 期刊外网</a>
+                                </li>
+                                                                                      </ul>       
+                        </div>
+                        </li>
+                                                                <li>  <div class="lib_list_pic">
+                           <img src="http://www.sdmc.edu.cn/uploadfile/2017/0112/20170112050410693.jpg">
+                        </div>
+                        <div class="lib_list_pic_child">
+                            <ul>
+                                                              
+                                <li class="lib_list_pic_child3">
+                                   <a href="http://211.64.72.6:8081/wfvideo/login.action" style="color: #ffffff"> 视频内网</a>
+                                </li>
+                                  
+                                <li class="lib_list_pic_child3">
+                                   <a href="http://video.wanfangdata.com.cn/" style="color: #ffffff"> 视频外网</a>
+                                </li>
+                                                                                      </ul>       
+                        </div>
+                        </li>
+                                                                <li>  <div class="lib_list_pic">
+                           <img src="http://www.sdmc.edu.cn/uploadfile/2017/0112/20170112050450117.jpg">
+                        </div>
+                        <div class="lib_list_pic_child">
+                            <ul>
+                                                              
+                                <li class="lib_list_pic_child4">
+                                   <a href="http://tsg.sdmc.edu.cn/html/jxkj/" style="color: #ffffff"> 教学课件</a>
+                                </li>
+                                                                                      </ul>       
+                        </div>
+                        </li>
+                                                                <li>  <div class="lib_list_pic">
+                           <img src="http://www.sdmc.edu.cn/uploadfile/2017/0112/20170112050526726.jpg">
+                        </div>
+                        <div class="lib_list_pic_child">
+                            <ul>
+                                                              
+                                <li class="lib_list_pic_child5">
+                                   <a href="http://tsg.sdmc.edu.cn/html/rjxz/" style="color: #ffffff"> 软件下载</a>
+                                </li>
+                                                                                      </ul>       
+                        </div>
+                        </li>
+                                                                <li>  <div class="lib_list_pic">
+                           <img src="http://www.sdmc.edu.cn/uploadfile/2017/0112/20170112050603843.jpg">
+                        </div>
+                        <div class="lib_list_pic_child">
+                            <ul>
+                                                              
+                                <li class="lib_list_pic_child6">
+                                   <a href="http://tsg.sdmc.edu.cn/html/cyzy/" style="color: #ffffff"> 常用资源</a>
+                                </li>
+                                                                                      </ul>       
+                        </div>
+                        </li>
+                                      
+               
+              </ul>          
+            </div>
+        </div>
+        <div id="lib_content2_right">
+            <div id="lib_content2_right_line"></div>
+            <div id="lib_content2_right_top">
+                <label style="display: block;font-size: 19px;font-family: 'Microsoft YaHei'; position: absolute; margin-top: 10px; margin-left: 20px; width: 100px;">新闻公告</label>
+                <a href="http://tsg.sdmc.edu.cn/html/lib_news/" style="display: block; width: 50px; height: 20px; position: absolute; margin-left:220px; font-size: 15px; margin-top: 15px; color:#3657c9">更多></a>
+            </div>
+            <div id="lib_content2_right_content">
+                                         <ul>
+                                                    <li>
+                            <a href="http://tsg.sdmc.edu.cn/html/2017/lib_news_0607/57.html" target="_blank" style="color: #3657c9; font-size: 14px;display: block; font-family: 'Microsoft YaHei';word-wrap: break-word; width: 250px; height: auto;">试开通百度文库</a>
+                            <div style="font-size: 14px;color: #676363;font-family:'SimSun';">发布时间：2017-06-07</div>
+                            </li>
+                                                    <li>
+                            <a href="http://tsg.sdmc.edu.cn/html/2017/lib_news_0524/56.html" target="_blank" style="color: #3657c9; font-size: 14px;display: block; font-family: 'Microsoft YaHei';word-wrap: break-word; width: 250px; height: auto;">国家哲学社会科学学术期刊数据库（NSSD）</a>
+                            <div style="font-size: 14px;color: #676363;font-family:'SimSun';">发布时间：2017-05-24</div>
+                            </li>
+                                                    <li>
+                            <a href="http://tsg.sdmc.edu.cn/html/2017/lib_news_0519/55.html" target="_blank" style="color: #3657c9; font-size: 14px;display: block; font-family: 'Microsoft YaHei';word-wrap: break-word; width: 250px; height: auto;">开通银符考试模拟题库应用系统</a>
+                            <div style="font-size: 14px;color: #676363;font-family:'SimSun';">发布时间：2017-05-19</div>
+                            </li>
+                                                    <li>
+                            <a href="http://tsg.sdmc.edu.cn/html/2017/lib_news_0519/54.html" target="_blank" style="color: #3657c9; font-size: 14px;display: block; font-family: 'Microsoft YaHei';word-wrap: break-word; width: 250px; height: auto;">PubMed引文及数据分析系统开通</a>
+                            <div style="font-size: 14px;color: #676363;font-family:'SimSun';">发布时间：2017-05-19</div>
+                            </li>
+                                                    <li>
+                            <a href="http://tsg.sdmc.edu.cn/html/2017/lib_news_0313/51.html" target="_blank" style="color: #3657c9; font-size: 14px;display: block; font-family: 'Microsoft YaHei';word-wrap: break-word; width: 250px; height: auto;">中国高等教育文献保障系统</a>
+                            <div style="font-size: 14px;color: #676363;font-family:'SimSun';">发布时间：2017-03-13</div>
+                            </li>
+                                                    <li>
+                            <a href="http://tsg.sdmc.edu.cn/html/2017/lib_news_0306/50.html" target="_blank" style="color: #3657c9; font-size: 14px;display: block; font-family: 'Microsoft YaHei';word-wrap: break-word; width: 250px; height: auto;">读秀简介（视频）</a>
+                            <div style="font-size: 14px;color: #676363;font-family:'SimSun';">发布时间：2017-03-06</div>
+                            </li>
+                                                  </ul>
+                             </div>
+        </div>
+    </div>
+    <div id="content3">
+         <div id="content_line"></div>
+         <div id="content3_pic">
+            <ul>
+                                                      <li class="content3_pic_img">
+                       <img src="http://www.sdmc.edu.cn/uploadfile/2017/0306/thumb_256_0_20170306031356743.jpg" style="width: 256px;height: 181px"/>
+                    </li>
+                                     <li class="content3_pic_img">
+                       <img src="http://www.sdmc.edu.cn/uploadfile/2017/0306/thumb_256_0_20170306031000140.jpg" style="width: 256px;height: 181px"/>
+                    </li>
+                                     <li class="content3_pic_img">
+                       <img src="http://www.sdmc.edu.cn/uploadfile/2017/0306/thumb_256_0_20170306030925127.jpg" style="width: 256px;height: 181px"/>
+                    </li>
+                                     <li class="content3_pic_img">
+                       <img src="http://www.sdmc.edu.cn/uploadfile/2017/0306/thumb_256_0_20170306030847812.jpg" style="width: 256px;height: 181px"/>
+                    </li>
+                                  
+             
+            </ul>
+        
+         </div>
+    </div>
+</div>
+</div>
+<div id="lib_foot">
+	<div id="lib_foot_text">Copyright © 2016 山东医学高等专科学校图书馆. 地址：山东省临沂市聚才六路. 电话：0539-8075538.　邮编：276000. 鲁ICP备12018674号 </div>
+</div>
+</body>
+</html>

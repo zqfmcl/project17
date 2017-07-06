@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				
+				<div class="mui-scroll">
+					<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 0px;">
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/app.js" ></script>
+		<script>
+			var qymc = "";
+			var qyid = "";
+			var JLIndex=0;
+			var hasMore=false;
+			function showInfo(id,name) {
+				mui.openWindow({
+					url: 'zwxx.html',
+					id: 'zwxx.html',
+					styles: {},
+					extras: {
+						zwid: id,
+						zwmc: name,
+						qymc:qymc,
+						qyid:qyid
+					},
+					createNew: false, //是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+					show: {
+						event: 'titleUpdate', //页面显示时机，默认为titleUpdate事件时显示
+					},
+					waiting: {
+						title: '正在加载...', //等待对话框上显示的提示内容
+					}
+				});
+			}
+				//业务数据获取完毕，并已插入当前页面DOM；
+				//注意：若为ajax请求，则需将如下代码放在处理完ajax响应数据之后；
+				mui.plusReady(function() {
+					setCharacters();
+					qyid=plus.storage.getItem('zwlb_qyid');
+					qymc=plus.storage.getItem('zwlb_qymc');
+				mui("#pullrefresh").on('tap', '.mui-navigate-right', function (event) {
+				this.click();
+				});
+		});
+			mui.init({
+				swipeBack: false,
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh,
+						auto : true
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				JLIndex=1;
+				setTimeout(function() {
+					mui.ajax(HOSTURL+'Query', {
+						data: {
+							sessionId : SESSIONID,
+							objectName : "E_QYZPXX",
+							params : null,
+							condition : "ssqy="+qyid,
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						crossDomain: true,
+						dataType: 'json', //服务器返回html格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 5000, //超时时间设置为10秒；
+						success: function(data) {
+							var datas=JSON.parse(JSON.stringify(data));
+							if(datas.result==1){
+								var keyValues=datas.keyValues;
+								var table = document.body.querySelector('.mui-table-view');
+								table.innerHTML="";
+								for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								li.innerHTML = '<a class="mui-navigate-right" onclick="showInfo('+keyValues[i]['ID']+',\''+keyValues[i]['zpgw']+'\')">' + keyValues[i]['zpgw'] + '</a>';
+								table.appendChild(li);
+      						}
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(xhr+'---'+type+'---'+errorThrown);
+						}
+					});
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1000);
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				JLIndex+=1;
+				setTimeout(function() {
+					mui.ajax(HOSTURL+'Query', {
+						data: {
+							sessionId : SESSIONID,
+							objectName : 'E_QYZPXX',
+							params : null,
+							condition : "ssqy="+qyid,
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						crossDomain: true,
+						dataType: 'json', //服务器返回html格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 5000, //超时时间设置为10秒；
+						success: function(data) {
+							var datas=JSON.parse(JSON.stringify(data));
+							if(datas.result==1){
+								hasMore=datas.hasMore;
+								var keyValues=datas.keyValues;
+								var table = document.body.querySelector('.mui-table-view');
+								for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								li.innerHTML = '<a class="mui-navigate-right" href="javascript:showInfo('+keyValues[i]['ID']+',\''+keyValues[i]['zpgw']+'\');">' + keyValues[i]['zpgw'] + '</a>';
+								table.appendChild(li);
+      						}
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(JSON.parse(type));
+						}
+					});
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(!hasMore); //refresh completed
+				}, 1000);
+			}
+		</script>
+	</body>
+
+</html>

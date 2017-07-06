@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">点击选择企业</h1>
+		</header>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/app.js" ></script>
+		<script type="text/javascript">
+			var JLIndex=0;
+			var hasMore=false;
+			var dgsqPage=null;
+			mui.init({
+				preloadPages:[{
+    						id:'dgsq.html',
+    						url:'dgsq.html'           
+  					}
+  					],
+				 pullRefresh: {
+					container: '#refreshContainer',
+					down: {
+						callback: downRefresh,
+						auto : true
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: upLoadRefresh
+					}
+				},
+
+			});
+			mui.plusReady(function(){
+				setCharacters();
+				//下拉刷新列表中的onclick事件无法触发,需要添加tap事件监听
+				mui("#refreshContainer").on('tap', '.mui-navigate-right', function (event) {
+				this.click();
+				});
+			});
+			function showInfo(id,name) {
+				if(!dgsqPage){
+					dgsqPage=plus.webview.getWebviewById('dgsq.html');
+				}
+				mui.fire(dgsqPage,'backToQY',{
+						qyID : id,
+						qyName : name
+					});
+					mui.openWindow({
+    						id:'dgsq.html'
+  					});
+			}
+			function downRefresh(){
+				JLIndex=1;
+				setTimeout(function(){
+					mui.ajax({
+						type : "POST",
+						dataType : "json",
+						url : HOSTURL+"Query",
+						data : {
+							sessionId : SESSIONID,
+							objectName : "E_QYJBXX",
+							params : null,
+							condition : "",
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						success: function(data){
+						console.log(JSON.stringify(data));
+      					var datas=JSON.parse(JSON.stringify(data));
+      					if(datas.result==1){
+      						var keyValues=datas.keyValues;
+      						var table=document.getElementById('3_qylb');
+      						if (JLIndex == 1) { //下拉刷新需要先清空数据
+                                table.innerHTML = '';// 在这里清空可以防止刷新时白屏
+                            }
+      						var ul=document.createElement("ul");
+      						document.getElementById('3_qylbScroll').appendChild(ul);
+      						ul.className="mui-table-view mui-table-view-chevron";
+      						for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								li.innerHTML = '<a class="mui-navigate-right" onclick="showInfo('+keyValues[i]['ID']+',\''+keyValues[i]['qymc']+'\')">' + keyValues[i]['qymc'] + '</a>';
+								table.appendChild(li);
+								
+      						}
+      						
+      					}
+      					
+      				},
+      				error:function(xhr,type,errorThrow){
+      					mui.toast(xhr+'---'+type+'---'+errorThrow);
+      					console.log(HOSTURL+'Query');
+      				}
+					});
+					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					//mui('#refreshContainer').pullRefresh().refresh(true);
+				},1000);
+			}
+			function upLoadRefresh(){
+				JLIndex+=1;
+				setTimeout(function(){
+					mui.ajax({
+						type : "POST",
+						dataType : "json",
+						url : HOSTURL+"Query",
+						data : {
+							sessionId : SESSIONID,
+							objectName : "E_QYJBXX",
+							params : null,
+							condition : "",
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						success: function(data){
+						//console.log(JSON.stringify(data));
+      					var datas=JSON.parse(JSON.stringify(data));
+      					if(datas.result==1){
+      						hasMore=datas.hasMore;
+      						var keyValues=datas.keyValues;
+      						var table=document.getElementById('3_qylb');
+      						var ul=document.createElement("ul");
+      						document.getElementById('3_qylbScroll').appendChild(ul);
+      						ul.className="mui-table-view mui-table-view-chevron";
+      						for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								li.innerHTML = '<a class="mui-navigate-right" onclick="showInfo('+keyValues[i]['ID']+',\''+keyValues[i]['qymc']+'\')">' + keyValues[i]['qymc'] + '</a>';
+								table.appendChild(li);
+      						}
+      						mui('#refreshContainer').pullRefresh().endPullupToRefresh(!hasMore);
+      					}
+      					
+      				},
+      				error:function(xhr,type,errorThrow){
+      					mui.toast(xhr+'---'+type+'---'+errorThrow);
+      				}
+					});
+				},1000);
+			}
+		</script>
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+    			<div id='3_qylbScroll'class="mui-scroll">
+      			<ul id="3_qylb" class="mui-table-view">
+      								
+				</ul>
+			</div>
+		</div>
+	</body>
+
+</html>

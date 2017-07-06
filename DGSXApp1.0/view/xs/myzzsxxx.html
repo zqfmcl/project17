@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			label{
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		
+		<div class="mui-content">
+		    <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 0px;">
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh,
+						auto : true
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+				});
+				var JLIndex=0;
+			var hasMore=false;
+			mui.plusReady(function(){
+				setCharacters();
+			});
+			function pulldownRefresh() {
+				JLIndex=1;
+				setTimeout(function() {
+					mui.ajax(HOSTURL+'Query', {
+						data: {
+							sessionId : SESSIONID,
+							objectName : "E_XSZZSXXX",
+							params : null,
+							condition : "xs="+XSID,
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 2,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						crossDomain: true,
+						dataType: 'json', //服务器返回html格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 5000, //超时时间设置为10秒；
+						success: function(data) {
+							//console.log(JSON.stringify(data));
+							var datas=JSON.parse(JSON.stringify(data));
+							if(datas.result==1){
+								var keyValues=datas.keyValues;
+								var table = document.body.querySelector('.mui-table-view');
+								table.innerHTML="";
+								for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								var div=document.createElement('div');
+								
+								var label=document.createElement('label');
+								label.innerHTML='企业名称:';
+								var qymclbl=document.createElement('label');
+								qymclbl.innerHTML=splitStr(keyValues[i]['qymc'])[0];
+								var label1=document.createElement('label');
+								label1.innerHTML='单位性质:';
+								var dwxzlbl=document.createElement('label');
+								dwxzlbl.innerHTML=splitStr(keyValues[i]['dwxz'])[1];
+								var label2=document.createElement('label');
+								label2.innerHTML='单位地址:';
+								var dwdzlbl=document.createElement('label');
+								dwdzlbl.innerHTML=splitStr(keyValues[i]['dwdz'])[0];
+								var label3=document.createElement('label');
+								label3.innerHTML='工作地址:';
+								var gzdzlbl=document.createElement('label');
+								gzdzlbl.innerHTML=splitStr(keyValues[i]['gzdz'])[0];
+								var label4=document.createElement('label');
+								label4.innerHTML='企业法人:';
+								var qyfrlbl=document.createElement('label');
+								qyfrlbl.innerHTML=splitStr(keyValues[i]['qyfr'])[0];
+								var label5=document.createElement('label');
+								label5.innerHTML='企业联系人:';
+								var qylxrlbl=document.createElement('label');
+								qylxrlbl.innerHTML=splitStr(keyValues[i]['qylxr'])[0];
+								var label6=document.createElement('label');
+								label6.innerHTML='企业联系方式:';
+								var qylxfslbl=document.createElement('label');
+								qylxfslbl.innerHTML=splitStr(keyValues[i]['lxfs1'])[0];
+								var label7=document.createElement('label');
+								label7.innerHTML='企业岗位:';
+								var qygwlbl=document.createElement('label');
+								qygwlbl.innerHTML=splitStr(keyValues[i]['qygw'])[0];
+								div.appendChild(label);
+								div.appendChild(qymclbl);
+								div.appendChild(label1);
+								div.appendChild(dwxzlbl);
+								div.appendChild(label2);
+								div.appendChild(dwdzlbl);
+								div.appendChild(label3);
+								div.appendChild(gzdzlbl);
+								div.appendChild(label4);
+								div.appendChild(qyfrlbl);
+								div.appendChild(label5);
+								div.appendChild(qylxrlbl);
+								div.appendChild(label6);
+								div.appendChild(qylxfslbl);
+								div.appendChild(label7);
+								div.appendChild(qygwlbl);
+								li.appendChild(div);
+								table.appendChild(li);
+      						}
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(xhr+'---'+type+'---'+errorThrown);
+						}
+					});
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1000);
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				JLIndex+=1;
+				setTimeout(function() {
+					mui.ajax(HOSTURL+'Query', {
+						data: {
+							sessionId : SESSIONID,
+							objectName : 'E_XSZZSXXX',
+							params : null,
+							condition : "xs="+XSID,
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						crossDomain: true,
+						dataType: 'json', //服务器返回html格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 5000, //超时时间设置为10秒；
+						success: function(data) {
+							var datas=JSON.parse(JSON.stringify(data));
+							if(datas.result==1){
+								hasMore=datas.hasMore;
+								var keyValues=datas.keyValues;
+								var table = document.body.querySelector('.mui-table-view');
+								for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								var div=document.createElement('div');
+								
+								var label=document.createElement('label');
+								label.innerHTML='企业名称:';
+								var qymclbl=document.createElement('label');
+								qymclbl.innerHTML=splitStr(keyValues[i]['qymc'])[0];
+								var label1=document.createElement('label');
+								label1.innerHTML='单位性质:';
+								var dwxzlbl=document.createElement('label');
+								dwxzlbl.innerHTML=splitStr(keyValues[i]['dwxz'])[0];
+								var label2=document.createElement('label');
+								label2.innerHTML='单位地址:';
+								var dwdzlbl=document.createElement('label');
+								dwdzlbl.innerHTML=splitStr(keyValues[i]['dwdz'])[0];
+								var label3=document.createElement('label');
+								label3.innerHTML='工作地址:';
+								var gzdzlbl=document.createElement('label');
+								gzdzlbl.innerHTML=splitStr(keyValues[i]['gzdz'])[0];
+								var label4=document.createElement('label');
+								label4.innerHTML='企业法人:';
+								var qyfrlbl=document.createElement('label');
+								qyfrlbl.innerHTML=splitStr(keyValues[i]['qyfr'])[0];
+								var label5=document.createElement('label');
+								label5.innerHTML='企业联系人:';
+								var qylxrlbl=document.createElement('label');
+								qylxrlbl.innerHTML=splitStr(keyValues[i]['qylxr'])[0];
+								var label6=document.createElement('label');
+								label6.innerHTML='企业联系方式:';
+								var qylxfslbl=document.createElement('label');
+								qylxfslbl.innerHTML=splitStr(keyValues[i]['lxfs1'])[0];
+								var label7=document.createElement('label');
+								label7.innerHTML='企业岗位:';
+								var qygwlbl=document.createElement('label');
+								qygwlbl.innerHTML=splitStr(keyValues[i]['qygw'])[0];
+								div.appendChild(label);
+								div.appendChild(qymclbl);
+								div.appendChild(label1);
+								div.appendChild(dwxzlbl);
+								div.appendChild(label2);
+								div.appendChild(dwdzlbl);
+								div.appendChild(label3);
+								div.appendChild(gzdzlbl);
+								div.appendChild(label4);
+								div.appendChild(qyfrlbl);
+								div.appendChild(label5);
+								div.appendChild(qylxrlbl);
+								div.appendChild(label6);
+								div.appendChild(qylxfslbl);
+								div.appendChild(label7);
+								div.appendChild(qygwlbl);
+								li.appendChild(div);
+								table.appendChild(li);
+      						}
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(JSON.parse(type));
+						}
+					});
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(!hasMore); //refresh completed
+				}, 1000);
+			}
+		</script>
+	</body>
+
+</html>

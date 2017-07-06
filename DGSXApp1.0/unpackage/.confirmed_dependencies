@@ -1,0 +1,298 @@
+{
+	"index.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"view/main/MainView.html"
+		]
+	},
+	"view/main/main_qyxx_f.html": {
+		"resources": [
+			"view/main/main_qyxx.html"
+		],
+		"refer": [
+			"view/main/main_qyxx.html"
+		]
+	},
+	"view/main/MainView.html": {
+		"refer": [
+			"view/main/main_xxxx.html",
+			"view/main/main_qyxx_f.html",
+			"view/main/main_tzgg.html",
+			"view/main/main_xsgl.html",
+			"view/main/main_tzgg_f.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"view/main/main_qyxx.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"view/qy/qyjbxx.html"
+		]
+	},
+	"view/main/main_xxxx.html": {
+		"refer": [
+			"view/xs/xxxg.html",
+			"view/main/main_qyxx_f1.html",
+			"view/xs/sxsq.html",
+			"view/xs/sxsq_f.html",
+			"view/xs/xsczsq.html",
+			"view/xs/zzsxsq.html",
+			"view/xs/sxzjsq.html",
+			"view/xs/qjsq.html",
+			"view/xs/xjsq.html",
+			"view/xs/dgsq.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"view/xs/xxxg.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.picker.min.js",
+			"css/mui.picker.min.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"view/qy/qyjbxx.html": {
+		"refer": [
+			"view/qy/zwlb.html",
+			"view/qy/zwlb_f.html"
+		],
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"view/main/main_xsgl.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"view/xs/myqjxx.html",
+			"view/xs/sxzj.html",
+			"view/xs/sxzj_f.html",
+			"view/xs/mysxxx.html",
+			"view/xs/mysxxx_f.html",
+			"view/xs/xsjbxx.html",
+			"view/xs/myqjxx_f.html",
+			"view/xs/mydgxx_f.html",
+			"view/xs/myczxx_f.html",
+			"view/xs/myzzsxxx_f.html"
+		]
+	},
+	"view/main/main_tzgg.html": {
+		"resources": [
+			"js/app.js"
+		],
+		"refer": [
+			"view/tz/tzDetail.html"
+		]
+	},
+	"view/main/main_tzgg_f.html": {
+		"resources": [
+			"view/main/main_tzgg.html"
+		],
+		"refer": [
+			"view/main/main_tzgg.html"
+		]
+	},
+	"view/xs/sxsq.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/app.js"
+		],
+		"refer": [
+			"view/qy/qyjbxx.html"
+		]
+	},
+	"view/xs/sxsq_f.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"view/xs/sxsq.html"
+		],
+		"refer": [
+			"view/xs/sxsq.html"
+		]
+	},
+	"view/qy/zwlb_f.html": {
+		"resources": [
+			"view/qy/zwlb.html",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"view/qy/zwlb.html"
+		]
+	},
+	"view/qy/zwlb.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"view/xs/xsczsq.html": {
+		"resources": [
+			"js/mui.picker.min.js",
+			"css/mui.picker.min.css"
+		]
+	},
+	"view/xs/zzsxsq.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		]
+	},
+	"view/xs/qjsq.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.picker.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.picker.min.css"
+		]
+	},
+	"view/xs/xjsq.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.picker.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.picker.min.css",
+			"css/mui.picker.min.css"
+		]
+	},
+	"view/xs/dgsq.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.picker.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.picker.min.css"
+		]
+	},
+	"view/xs/sxzj.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"view/xs/sxzj_f.html": {
+		"resources": [
+			"view/xs/sxzj.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"view/xs/sxzj.html"
+		]
+	},
+	"view/xs/mysxxx.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"view/xs/mysxxx_f.html": {
+		"resources": [
+			"view/xs/mysxxx.html",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"view/xs/mysxxx.html"
+		]
+	},
+	"view/xs/xsjbxx.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		]
+	},
+	"view/xs/myqjxx.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"view/xs/myqjxx_f.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"view/xs/myqjxx.html"
+		],
+		"refer": [
+			"view/xs/myqjxx.html"
+		]
+	},
+	"view/xs/mydgxx_f.html": {
+		"resources": [
+			"view/xs/mydgxx.html",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"view/xs/mydgxx.html"
+		]
+	},
+	"view/xs/mydgxx.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"view/xs/myczxx_f.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"view/xs/myczxx.html"
+		],
+		"refer": [
+			"view/xs/myczxx.html"
+		]
+	},
+	"view/xs/myczxx.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"view/xs/myzzsxxx_f.html": {
+		"resources": [
+			"view/xs/myzzsxxx.html"
+		],
+		"refer": [
+			"view/xs/myzzsxxx.html"
+		]
+	}
+}

@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<style>
+			.mui-input-row .mui-btn+input, .mui-input-row label+input, .mui-input-row:last-child {
+    				/* background: 0 0; */
+   				background-color: white;
+   				
+			}
+			.mui-input-row{
+				margin-top: 10px;
+			}
+			.mui-content{
+				margin-right: 10px;
+			}
+			.mui-input-row label {
+    				background: #efeff4;
+			}
+			/*#qjtsdiv{
+				background: #efeff4;
+				/*margin-right: 20px;*/
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">自助实习申请</h1>
+		</header>
+		<div class="mui-content" style="margin-bottom: 50px;">
+		    <div class="mui-input-row">
+				<label>企业名称</label>
+				<input type="text" id="qymc" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+				<label>单位性质</label>
+				<input type="text" id="dwxz" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+				<label>单位地址</label>
+				<input type="text" id="dwdz" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+				<label>工作地址</label>
+				<input type="text" id="gzdz" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+				<label>企业法人</label>
+				<input type="text" id="qyfr" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+				<label>企业联系人</label>
+				<input type="text" id="qylxr" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+				<label>企业联系方式</label>
+				<input type="text" id="qylxfs" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+				<label>企业岗位</label>
+				<input type="text" id="qygw" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+				<label>实习开始时间</label>
+				<button id="kssj" style="width: 65%; border-width: 0px;">
+					点击选择
+				</button>
+			</div>
+			<div class="mui-bar mui-bar-footer">
+			<button id='submit' class="mui-btn mui-btn-block mui-btn-primary">提交</button>
+			</div>
+		</div>
+		<script type="text/javascript">
+			mui.init();
+			var kssj=null;
+			var dtPicker=new mui.DtPicker({
+				type:'date',
+				beginDate:new Date(),
+				endDate : new Date(2120,12,30),
+				labels : ['Year','Mon','Day']
+			});
+			mui.plusReady(function(){
+				setCharacters();
+				document.getElementById('kssj').addEventListener('tap',function(){
+					dtPicker.show(function(selectItems){
+						document.getElementById('kssj').innerHTML=selectItems;
+						kssj=selectItems.y.value+selectItems.m.value+selectItems.d.value;
+					})
+				});
+				document.getElementById('submit').addEventListener('tap',function(){
+					var qymc=document.getElementById('qymc').value;
+					var dwxz=document.getElementById('dwxz').value;
+					var dwdz=document.getElementById('dwdz').value;
+					var gzdz=document.getElementById('gzdz').value;
+					var qyfr=document.getElementById('qyfr').value;
+					var qylxr=document.getElementById('qylxr').value;
+					var qylxfs=document.getElementById('qylxfs').value;
+					var qygw=document.getElementById('qygw').value;
+					startProcess(qymc,dwxz,dwdz,gzdz,qyfr,qylxr,qylxfs,qygw,kssj);
+				});
+			});
+			function startProcess(qymc,dwxz,dwdz,gzdz,qyfr,qylxr,qylxfs,qygw,kssj){
+				mui.ajax({
+					url : HOSTURL+'doWorkAction',
+					type : 'POST',
+					dataType : 'json',
+					data : {
+								sessionId:SESSIONID,
+								workflowName : 'WF_XSZZSXSQGZL',
+								instanceId : -1,
+								actionId : 4,
+								params : JSON.stringify({
+									xs : XSID,
+									xh : XH,
+									zyb : ZYBID,
+									zy : ZYID,
+									bj : BJID,
+									qymc : qymc,
+									dwxz : dwxz,
+									gzdz : gzdz,
+									qyfr : qyfr,
+									qylxr : qylxr,
+									lxfs1 : qylxfs,
+									qygw : qygw,
+									SXKSSJ : kssj
+								}),
+								caller : YHID,
+								summary : ''
+					},
+					success : function(data){
+						console.log(JSON.stringify(data));
+						if(data.result==1){
+							plus.nativeUI.toast("提交成功！");
+							var self=plus.webview.currentWebview();
+							self.close();
+						}else{
+							plus.nativeUI.toast("提交失败！");
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+								console.log(xhr+"---"+type+"---"+errorThrown);
+					}
+				});
+				}
+		</script>
+	</body>
+
+</html>

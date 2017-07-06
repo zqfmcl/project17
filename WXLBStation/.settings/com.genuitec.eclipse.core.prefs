@@ -1,0 +1,4 @@
+#Wed Apr 05 11:34:40 CST 2017
+eclipse.preferences.version=1
+validator.Checked=WebRoot/JS/respond.min.js,WebRoot/JS/zepto.min.js,WebRoot/JS/example.js,WebRoot/JS/jweixin-1.2.0.js,WebRoot/JSP/AccessCode.jsp,WebRoot/JS/jquery.js,WebRoot/JSP/Login.jsp,WebRoot/JS/zepto.js
+validator.Unchecked=

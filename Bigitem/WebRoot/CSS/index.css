@@ -1,0 +1,347 @@
+body{
+	background-color:#eeeeee;
+}
+*{
+	padding: 0px;
+	margin: 0px;
+}
+label, input, button, select, textarea{
+	line-height: 1.5;
+}
+.carousel-indicators{
+	top: 225px;
+	right:210px;
+}
+.carousel{
+	margin-bottom: 0px;
+}
+.nav{
+	margin: 0px;
+	padding:0px;
+}
+.news li a{
+	width:160px;
+	height: 30px;
+	text-align: center;
+	padding-top: 20px;
+	color: #000000;
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	position: relative;
+}
+.news label{
+	display: block;
+	font-size: 14.101px;
+    font-family: "SimSun";
+    color: rgb(80, 80, 80);
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index:101;
+    display: none;
+}
+#top{
+	width: 100%;
+	height: 113px;
+	background-image: url(../Image/back.gif);
+}
+#top .head{
+	width: 1370px;
+	height: 113px;
+	margin: 0 auto;
+}
+#top .head .logo{
+	float: left;
+}
+#top .head .login{
+	float: right;
+	color: #ffffff;
+	margin-top: 80px;
+	margin-right: 10px;
+}
+#top .head .login a{
+	color: #3ba0cb;
+}
+#content{
+	width: 1400px;
+	height: auto;
+	margin: 0 auto;
+}
+#content .news{
+	width: 865px;
+	height: 370px;
+	float: left;
+	background-color: #edf4fb;
+	margin-top: 22px;
+	position: relative;
+}
+#content .news_left{
+	width: 484px;
+	height: 280px;
+	float: left;
+	margin-top: 20px;
+	margin-left: 15px;
+}
+#content .news_left_pic{
+	width: 484px;
+	height: 280px;
+}
+#content .news_left_text{
+	width: 484px;
+	height: 20px;
+	text-align: center;
+	font-size: 14px;
+    font-family: "SimSun";
+    color: rgb(49, 56, 62);
+    margin-top: 8px;
+}
+#content .news_right{
+	width: 320px;
+	height: 280px;
+	float: left;
+	margin-top: 20px;
+	margin-left: 15px;
+}
+#content .news_right ul{
+	width: 320px;
+	height: 280px;
+	margin: 0px;
+	list-style: square inside url('../Image/1.gif')
+}
+#content .news_right ul li{
+	width: 320px;
+	height: 20px;
+	/*display:block;*/
+	/*float: left;*/
+	margin-bottom:15px;
+	margin-left: 10px;
+	position: relative;
+}
+#content .news_right ul li a{
+	font-size: 13px;
+    color: rgb(69, 69, 69);
+    font-family: "SimSun";
+}
+#content .news_right ul li label{
+	position: absolute;
+	width: 70px;
+    height: 20px;
+    right: 0px;
+    margin: 0px;
+    top: 0px;
+    font-size: 13px;
+    color: rgb(69, 69, 69);
+    font-family: "SimSun";
+}
+
+#content .videos{
+	width: 500px;
+	height: 370px;
+	float: left;
+	background-color: #edf4fb;
+	margin-top: 22px;
+	margin-left: 20px;
+}
+#content .city_detail{
+	width: 1385px;
+	height: 325px;
+	float: left;
+	background-color: #edf4fb;
+	margin-top: 22px;
+}
+#content .city_detail .nav{
+	width: 285px;
+	height: 50px;
+	background-color: #ffffff;
+}
+#content .city_detail .nav .io{
+	width: 8px;
+	height: 25px;
+	background-color: #ff9d0b;
+	float: left;
+	margin-left: 20px;
+	margin-top: 13px;
+}
+#content .city_detail .nav .t{
+	float: left;
+	margin-left: 10px;
+	margin-top: 15px;
+	font-size: 16.115px;
+    font-family: "Microsoft YaHei";
+    color: rgb(49, 56, 62);
+}
+#content .city_detail .detail{
+	width: 1385px;
+	height: 270px;
+	background-color: #ffffff;
+}
+#content .city_detail .detail .tt{
+	width: 570px;
+	height: 230px;
+	margin-left: 20px;
+	margin-top: 15px;
+	float: left;
+}
+#content .city_detail .detail .tt label{
+	display: block;
+	float: left;
+	width: 545px;
+	margin-top: 30px;
+	margin-left: 20px;
+	font-size: 14px;
+    font-family: "SimSun";
+    color: rgb(0, 117, 194);
+    cursor: default;
+}
+#content .city_detail .detail .tt #look_detail{
+	width: 250px;
+	height: 65px;
+	float: right;
+	margin-top: 50px;
+}
+#content .city_detail .detail .tt #look_detail a{
+	font-size: 20px;
+    font-family: 'Microsoft YaHei';
+    color: rgb(0, 117, 194);
+    text-decoration: underline;
+}
+#content .city_detail .detail .char1{
+	width: 380px;
+	height: 230px;
+	margin-left: 20px;
+	margin-top: 15px;
+	float: left;
+}
+#content .city_detail .detail .char2{
+	width: 330px;
+	height: 230px;
+	margin-left: 20px;
+	margin-top: 15px;
+	float: left;
+}
+#content .country_detail{
+	width: 1385px;
+	height: 400px;
+	float: left;
+	background-color: #edf4fb;
+	margin-top: 22px;
+}
+#content .country_detail .nav{
+	width: 203px;
+	height: 50px;
+	background-color: #ffffff;
+}
+#content .country_detail .nav .io{
+	width: 8px;
+	height: 25px;
+	background-color: #ff9d0b;
+	float: left;
+	margin-left: 20px;
+	margin-top: 13px;
+}
+#content .country_detail .nav .t{
+	float: left;
+	margin-left: 10px;
+	margin-top: 15px;
+	font-size: 16.115px;
+    font-family: "Microsoft YaHei";
+    color: rgb(49, 56, 62);
+}
+#content .country_detail .detail{
+	width: 1345px;
+	height: 320px;
+	float: left;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+.footer{
+	width: 100%;
+	height: 38px;
+	float: left;
+	background-color: #2077c7;
+	margin-top: 55px;
+}
+.navbar-default{
+    background-color: #ffffff;
+    border-width: 0px;
+}
+.navbar{
+    border-radius: 0px;
+}
+.nav-tabs{
+    border-bottom:0px;
+    width: 600px;
+    float: left;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+    background-color: #ffffff;
+    color: #000000;
+    border:1px solid #ffffff;
+}
+.chc_contain a{
+    color: #000000;
+}
+.navbar-brand{
+    color: #FFFFFF;
+}
+.navbar-brand:visited{
+    color: #FFFFFF;
+}
+.navbar-brand:hover{
+    color: #C7C5C5;
+}
+/*--------------------*/
+#show_top{
+	 width: 100%;
+	 height:47px;
+	 background-color: #ffffff;
+	 float: left;
+	 margin-top: 40px;
+}
+#show_top label{
+	float: left;
+	margin-top: 14px;
+	color: #555555;
+	font-size: 14px;
+	font-family: "SimSun";
+	margin-left: 20px;
+}
+#show_content{
+	 width: 100%;
+	 height:auto;
+	 background-color: #eeeeee;
+	 float: left;
+	 margin-top: 20px;
+}
+#show_content table tr td{
+	text-align: center;
+}
+#show_content .title{
+	text-align: center;
+	font-size: 16px;
+	font-family: 'SimSun';
+	height: 60px;
+}
+#show_content label{
+	width: 1370px;
+	margin-left: 15px;
+	font-family: 'SimSun';
+	font-size: 16px;
+	height: auto;
+	cursor: default;
+}
+#show_content .list_tz{
+	width: 1370px;
+	margin-left: 15px;
+	height: auto;
+}
+#show_content .list_tz a{
+	color: #333333;
+}
+#page{
+	width: 600px;
+	height: 60px;
+	text-align: center;
+	float: left;
+	margin-left: 380px;
+}

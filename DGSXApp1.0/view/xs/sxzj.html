@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			label{
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+		    <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				
+				<div class="mui-scroll">
+					<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 0px;">
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script type="text/javascript">
+			var JLIndex=0;
+			var hasMore=false;
+
+			mui.init({
+				swipeBack: false,
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh,
+						auto : true
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			mui.plusReady(function() {
+				setCharacters();
+				mui("#pullrefresh").on('tap', '.mui-navigate-right', function (event) {
+				this.click();
+				});
+		});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				JLIndex=1;
+				setTimeout(function() {
+					mui.ajax(HOSTURL+'Query', {
+						data: {
+							sessionId : SESSIONID,
+							objectName : "E_XSSXZJ",
+							params : null,
+							condition : "xs="+XSID,
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 2,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						crossDomain: true,
+						dataType: 'json', //服务器返回html格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 5000, //超时时间设置为10秒；
+						success: function(data) {
+							//console.log(JSON.stringify(data));
+							var datas=JSON.parse(JSON.stringify(data));
+							if(datas.result==1){
+								var keyValues=datas.keyValues;
+								var table = document.body.querySelector('.mui-table-view');
+								table.innerHTML="";
+								for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								var div=document.createElement('div');
+								var label=document.createElement('label');
+								label.innerHTML='所在企业:';
+								var szqylbl=document.createElement('label');
+								szqylbl.innerHTML=QYNAME;
+								var label1=document.createElement('label');
+								label1.innerHTML='岗位:';
+								var gwlbl=document.createElement('label');
+								gwlbl.innerHTML=GWNAME;
+								var label2=document.createElement('label');
+								label2.innerHTML='总结类型:';
+								var zjlxlbl=document.createElement('label');
+								zjlxlbl.innerHTML=splitStr(keyValues[i]['zjlx'])[1];
+								var label3=document.createElement('label');
+								label3.innerHTML='日期:';
+								var rqlbl=document.createElement('label');
+								rqlbl.innerHTML=splitStr(keyValues[i]['zjkssj'])[0]+' 至 '+splitStr(keyValues[i]['zjjssj'])[0];;
+								var label4=document.createElement('label');
+								label4.innerHTML='企业评分:';
+								var qypflbl=document.createElement('label');
+								qypflbl.innerHTML=splitStr(keyValues[i]['qypf'])[0];
+								var label5=document.createElement('label');
+								label5.innerHTML='专业技能:';
+								var zyjnlbl=document.createElement('label');
+								zyjnlbl.innerHTML=splitStr(keyValues[i]['zyjn'])[0];
+								var label6=document.createElement('label');
+								label6.innerHTML='人际关系:';
+								var rjgxlbl=document.createElement('label');
+								rjgxlbl.innerHTML=splitStr(keyValues[i]['rjgx'])[0];
+								var label7=document.createElement('label');
+								label7.innerHTML='劳动态度:';
+								var ldtdlbl=document.createElement('label');
+								ldtdlbl.innerHTML=splitStr(keyValues[i]['ldtd'])[0];
+								var label8=document.createElement('label');
+								label8.innerHTML='劳动纪律:';
+								var ldjllbl=document.createElement('label');
+								qypflbl.innerHTML=splitStr(keyValues[i]['ldjl'])[0];
+								var label9=document.createElement('label');
+								label9.innerHTML='实习成绩:';
+								var sxcjlbl=document.createElement('label');
+								sxcjlbl.innerHTML=splitStr(keyValues[i]['sxcj'])[0];
+								div.appendChild(label);
+								div.appendChild(szqylbl);
+								div.appendChild(label1);
+								div.appendChild(gwlbl);
+								div.appendChild(label2);
+								div.appendChild(zjlxlbl);
+								div.appendChild(label3);
+								div.appendChild(rqlbl);
+								div.appendChild(label4);
+								div.appendChild(qypflbl);
+								div.appendChild(label5);
+								div.appendChild(qypflbl);
+								div.appendChild(label6);
+								div.appendChild(rjgxlbl);
+								div.appendChild(label7);
+								div.appendChild(ldtdlbl);
+								div.appendChild(label8);
+								div.appendChild(ldjllbl);
+								div.appendChild(label9);
+								div.appendChild(sxcjlbl);
+								li.appendChild(div);
+								table.appendChild(li);
+      						}
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(xhr+'---'+type+'---'+errorThrown);
+						}
+					});
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1000);
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				JLIndex+=1;
+				setTimeout(function() {
+					mui.ajax(HOSTURL+'Query', {
+						data: {
+							sessionId : SESSIONID,
+							objectName : 'E_XSSXZJ',
+							params : null,
+							condition : "xs="+XSID,
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						crossDomain: true,
+						dataType: 'json', //服务器返回html格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 5000, //超时时间设置为10秒；
+						success: function(data) {
+							var datas=JSON.parse(JSON.stringify(data));
+							if(datas.result==1){
+								hasMore=datas.hasMore;
+								var keyValues=datas.keyValues;
+								var table = document.body.querySelector('.mui-table-view');
+								for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								var div=document.createElement('div');
+								var label=document.createElement('label');
+								label.innerHTML='所在企业:';
+								var szqylbl=document.createElement('label');
+								szqylbl.innerHTML=QYNAME;
+								var label1=document.createElement('label');
+								label1.innerHTML='岗位:';
+								var gwlbl=document.createElement('label');
+								gwlbl.innerHTML=GWNAME;
+								var label2=document.createElement('label');
+								label2.innerHTML='总结类型:';
+								var zjlxlbl=document.createElement('label');
+								zjlxlbl.innerHTML=splitStr(keyValues[i]['zjlx'])[1];
+								var label3=document.createElement('label');
+								label3.innerHTML='日期:';
+								var rqlbl=document.createElement('label');
+								rqlbl.innerHTML=splitStr(keyValues[i]['zjkssj'])[0]+' 至 '+splitStr(keyValues[i]['zjjssj'])[0];;
+								var label4=document.createElement('label');
+								label4.innerHTML='企业评分:';
+								var qypflbl=document.createElement('label');
+								qypflbl.innerHTML=splitStr(keyValues[i]['qypf'])[0];
+								var label5=document.createElement('label');
+								label5.innerHTML='专业技能:';
+								var zyjnlbl=document.createElement('label');
+								zyjnlbl.innerHTML=splitStr(keyValues[i]['zyjn'])[0];
+								var label6=document.createElement('label');
+								label6.innerHTML='人际关系:';
+								var rjgxlbl=document.createElement('label');
+								rjgxlbl.innerHTML=splitStr(keyValues[i]['rjgx'])[0];
+								var label7=document.createElement('label');
+								label7.innerHTML='劳动态度:';
+								var ldtdlbl=document.createElement('label');
+								ldtdlbl.innerHTML=splitStr(keyValues[i]['ldtd'])[0];
+								var label8=document.createElement('label');
+								label8.innerHTML='劳动纪律:';
+								var ldjllbl=document.createElement('label');
+								qypflbl.innerHTML=splitStr(keyValues[i]['ldjl'])[0];
+								var label9=document.createElement('label');
+								label9.innerHTML='实习成绩:';
+								var sxcjlbl=document.createElement('label');
+								sxcjlbl.innerHTML=splitStr(keyValues[i]['sxcj'])[0];
+								div.appendChild(label);
+								div.appendChild(szqylbl);
+								div.appendChild(label1);
+								div.appendChild(gwlbl);
+								div.appendChild(label2);
+								div.appendChild(zjlxlbl);
+								div.appendChild(label3);
+								div.appendChild(rqlbl);
+								div.appendChild(label4);
+								div.appendChild(qypflbl);
+								div.appendChild(label5);
+								div.appendChild(qypflbl);
+								div.appendChild(label6);
+								div.appendChild(rjgxlbl);
+								div.appendChild(label7);
+								div.appendChild(ldtdlbl);
+								div.appendChild(label8);
+								div.appendChild(ldjllbl);
+								div.appendChild(label9);
+								div.appendChild(sxcjlbl);
+								li.appendChild(div);
+								table.appendChild(li);
+      						}
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(JSON.parse(type));
+						}
+					});
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(!hasMore); //refresh completed
+				}, 1000);
+			}
+		</script>
+	</body>
+
+</html>

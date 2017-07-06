@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				//我的实习信息
+				document.getElementById('2_sub1_wdsxxx').addEventListener('tap',function(){
+					mui.openWindow({
+						url : '../xs/mysxxx_f.html',
+						id : 'mysxxx_f.html'
+					});
+				});
+				//实习总结
+				document.getElementById('2_sub1_sxzj').addEventListener('tap',function(){
+					mui.openWindow({
+						url : '../xs/sxzj_f.html',
+						id : 'sxzj_f.html',
+						style : {
+							
+						}
+					});
+				});
+				//我的基本信息
+				document.getElementById('2_sub1_wdjbxx').addEventListener('tap',function(){
+					mui.openWindow({
+						url : '../xs/xsjbxx.html',
+						id : 'xsjbxx.html'
+					});
+				});
+				//我的请假信息
+				document.getElementById('2_sub2_qjxx').addEventListener('tap',function(){
+					mui.openWindow({
+						url : '../xs/myqjxx_f.html',
+						id : 'myqjxx_f.html'
+					});
+				});
+				//我的调岗信息
+				document.getElementById('2_sub2_dgxx').addEventListener('tap',function(){
+					mui.openWindow({
+						url : '../xs/mydgxx_f.html',
+						id : 'mydgxx_f.html'
+					});
+				});
+				//我的辞职信息
+				document.getElementById('2_sub3_czxx').addEventListener('tap',function(){
+					mui.openWindow({
+						url : '../xs/myczxx_f.html',
+						id : 'myczxx_f.html'
+					});
+				});
+				//我的自助实习信息
+				document.getElementById('2_sub3_zzsxxx').addEventListener('tap',function(){
+					mui.openWindow({
+						url : '../xs/myzzsxxx_f.html',
+						id : 'myzzsxxx_f.html'
+					});
+				});
+			});
+		</script>
+		<div style="margin-top: 40px; margin-left: 10px; margin-right: 10px; background-color: transparent;height: 25%;overflow: hidden;">
+      					<div style="width: 65%; background-color: transparent;float: left;">
+        						<button id="2_sub1_sxzj" style="background-color: rgb(188,213,104);width: 100%;height:100px;color: white;font-size: 20pt;">实习总结</button>
+      					</div>
+      					<div style="width: 30%; background-color: transparent;float: right;">
+      						<button id="2_sub1_wdsxxx" style="background-color: rgb(129,184,195);border:0 solid #ccc; color: white;float:left;margin-bottom: 10px;width: 100%;height: 45px;">我的<br>实习信息</button>
+      						<button id="2_sub1_wdjbxx" style="background-color: rgb(206,144,123);border:0 solid #ccc; color: white;float:left;width:100%;height:45px">我的<br>基本信息</button>
+      					</div>
+      					
+      					
+      				</div>
+      				<div style="margin-top: 20px; margin-left: 10px; margin-right: 10px; background-color: transparent;height: 25%;overflow: hidden;">
+      					<button id="2_sub2_qjxx" style="background-color: rgb(194,202,124);border:0 solid #ccc; color: white;float:left;width:45%;height:90px;float: left;margin-right: 15px;font-size: 15pt;">请假<br>信息</button>
+<!--      					<button id="2_sub2_xjxx" style="background-color: rgb(146,129,203);border:0 solid #ccc; color: white;width:30%;height:90px;font-size: 15pt;">销假<br>信息</button>
+-->      					<button id="2_sub2_dgxx" style="background-color: rgb(240,220,155);border:0 solid #ccc; color: white;float:right;width:45%;height:90px;font-size: 15pt;">调岗<br>信息</button>
+      				</div>
+      				<div style="margin-top: 20px; margin-left: 10px; margin-right: 10px; background-color: transparent;height: 25%;overflow: hidden;">
+      					<button id="2_sub3_zzsxxx" style="background-color: rgb(138,173,236);border:0 solid #ccc; color: white;float:left;width:66%;height:90px;float: right;font-size: 20pt;">自主实习信息</button>
+      					<button id="2_sub3_czxx" style="background-color: rgb(170,96,192);border:0 solid #ccc; color: white;width:30%;height:90px;float: left;font-size: 15pt;">
+      						辞职<br>信息
+      					</button>
+      				</div>
+	</body>
+
+</html>

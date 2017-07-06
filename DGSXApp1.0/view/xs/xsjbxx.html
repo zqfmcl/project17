@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">我的基本信息</h1>
+		</header>
+		<div class="mui-content">
+		    <ul>
+				<li>姓名：
+					<span id="xm"></span>
+				</li>
+				<li>身份证号：
+					<div id="sfzh"></div>
+				</li>
+				<li>性别：<span id="xb"></span></li>
+				<li>年龄：<span id="nl"></span></li>
+				<li>专业部：<span id="zyb"></span></li>
+				<li>专业：<span id="zy"></span></li>
+				<li>班级：<span id="bj"></span></li>
+				<li>班主任：<span id="bzr"></span></li>
+				<li>实习指导教师：<span id="sxzdjs"></span></li>
+				<li>实习管理教师：<span id="sxgljs"></span></li>
+				<li>实习成绩：<span id="sxcj"></span></li>
+				<li>实习状态：<span id="sxzt"></span></li>
+				<li>平均工资：<span id="pjgz"></span></li>
+				<li>身高：<span id="sg"></span></li>
+				<li>体重：<span id="tz"></span></li>
+				<li>血型：<span id="xx"></span></li>
+				<li>家庭地址：<span id="jtdz"></span></li>
+				<li>联系电话：<span id="lxdh"></span></li>
+				<li>QQ：<span id="qq"></span></li>
+				<li>微信：<span id="wx"></span></li>
+				<li>邮箱：<span id="yx"></span></li>
+				<li>父亲姓名：<span id="fqxm"></span></li>
+				<li>父亲联系电话：<span id="fqlxdh"></span></li>
+				<li>母亲姓名：<span id="mqxm"></span></li>
+				<li>母亲联系电话：<span id="mqlxdh"></span></li>
+				<li>就业去向：<span id="jyqx"></span></li>
+				<li>就业状况：<span id="jyzk"></span></li>
+				<li>就业薪资：<span id="jyxz"></span></li>
+				<li>保险情况：<span id="bxqk"></span></li>
+				<li>是否取得毕业证：<span id="sfqdbyz"></span></li>
+				<li>就业满意调查：<span id="jymydc"></span></li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				setCharacters();
+				mui.ajax({
+					url : HOSTURL+'Query',
+					type : 'POST',
+					dataType : 'json',
+					data : {
+						sessionId : SESSIONID,
+      					objectName : 'E_XSJBXX',
+      					params : null,
+      					condition : 'ID='+XSID,
+      					queryOptionStr : JSON.stringify({
+								batchNo : 1,
+								batchSize : 20,
+								valueOption : 2,
+								orderBy : "",
+								queryId : ""
+							})
+					},
+					success : function(datas){
+						console.log(JSON.stringify(datas));
+						var data=datas.keyValues[0];
+						if(datas.result==1){
+							document.getElementById('xm').innerHTML=splitStr(data.xm)[0];
+							document.getElementById('sfzh').innerHTML=splitStr(data.xh)[0];
+							document.getElementById('xb').innerHTML=splitStr(data.xb)[1];
+							document.getElementById('nl').innerHTML=splitStr(data.nl)[0];
+							document.getElementById('zyb').innerHTML=splitStr(data.zyb)[1];
+							document.getElementById('zy').innerHTML=splitStr(data.zy)[1];
+							document.getElementById('bj').innerHTML=splitStr(data.bj)[1];
+							document.getElementById('bzr').innerHTML=splitStr(data.bzr)[1];
+							document.getElementById('sxzdjs').innerHTML=splitStr(data.sxzdjs)[1];
+							document.getElementById('sxgljs').innerHTML=splitStr(data.sxgljs)[1];
+							document.getElementById('sxcj').innerHTML=splitStr(data.sxcj)[0];
+							document.getElementById('sxzt').innerHTML=splitStr(data.SXZT)[1];
+							document.getElementById('pjgz').innerHTML=splitStr(data.pjgz)[0];
+							document.getElementById('sg').innerHTML=splitStr(data.sg)[0];
+							document.getElementById('tz').innerHTML=splitStr(data.tz)[0];
+							document.getElementById('xx').innerHTML=splitStr(data.xx)[0];
+							document.getElementById('jtdz').innerHTML=splitStr(data.jtdz)[0];
+							document.getElementById('lxdh').innerHTML=splitStr(data.lxdh)[0];
+							document.getElementById('qq').innerHTML=splitStr(data.qq)[0];
+							document.getElementById('wx').innerHTML=splitStr(data.wx)[0];
+							document.getElementById('yx').innerHTML=splitStr(data.yx)[0];
+							document.getElementById('fqxm').innerHTML=splitStr(data.fqxm)[0];
+							document.getElementById('fqlxdh').innerHTML=splitStr(data.fqlxdh)[0];
+							document.getElementById('mqxm').innerHTML=splitStr(data.mqxm)[0];
+							document.getElementById('mqlxdh').innerHTML=splitStr(data.mqlxdh)[0];
+							document.getElementById('jyqx').innerHTML=splitStr(data.jyqx)[1];
+							document.getElementById('jyzk').innerHTML=splitStr(data.jyzk)[1];
+							document.getElementById('jyxz').innerHTML=splitStr(data.jyxz)[1];
+							document.getElementById('bxqk').innerHTML=splitStr(data.bxqk)[1];
+							document.getElementById('sfqdbyz').innerHTML=splitStr(data.sfqdbyzs)[1];
+							document.getElementById('jymydc').innerHTML=splitStr(data.jymydc)[1];
+						}
+					},
+					error:function(xhr,type,errorThrow){
+      					console.log("getYHJBXX"+xhr+"---"+type+"---"+errorThrow);
+      				}
+				});
+			});
+		</script>
+	</body>
+
+</html>

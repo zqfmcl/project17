@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-title{
+				font-size: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"></h1>
+		</header>
+		<div class="mui-content">
+		    <ul>
+				<li>发布人：
+					<span id="fbr"></span>
+				</li>
+				<li>发布时间：
+					<span id="fbsj"></span>
+				</li>
+				<li>访问量：
+					<span id="fwl"></span>
+				</li>
+				<li>发布内容：
+					<span id="fbnr"></span>
+				</li>
+				<li>
+					附件：
+					<a id="fj"></a>
+				</li>
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script type="text/javascript">
+			var tzid="";
+			var tzTitle="";
+			mui.init();
+			mui.plusReady(function(){
+				setCharacters();
+				var self=plus.webview.currentWebview();
+				tzid=self.tzid;
+				tzTitle=self.tztitle;
+				document.body.querySelector('.mui-title').innerHTML=tzTitle;
+				//请求通知详情信息
+				mui.ajax({
+						type : "POST",
+						dataType : "json",
+						url : HOSTURL+"Query",
+						data : {
+							sessionId : SESSIONID,
+							objectName : "tBlog",
+							params : null,
+							condition : "ID="+tzid,
+							queryOptionStr: JSON.stringify({
+								batchNo : 1,
+								batchSize : 20,
+								valueOption : 1,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						success: function(data){
+						console.log(JSON.stringify(data));
+      					var datas=JSON.parse(JSON.stringify(data));
+      					if(datas.result==1){
+      						var keyValue=datas.keyValues[0];
+      						document.getElementById('fbr').innerHTML=keyValue.UID;
+      						document.getElementById('fbsj').innerHTML=keyValue.PubTime;
+      						document.getElementById('fwl').innerHTML=keyValue.Visits;
+      						document.getElementById('fbnr').innerHTML='<br>'+keyValue.Content;
+      					}
+      					
+      				},
+      				error:function(xhr,type,errorThrow){
+      					mui.toast(xhr+'---'+type+'---'+errorThrow);
+      				}
+				});
+				//获取附件信息
+				mui.ajax({
+						type : "POST",
+						dataType : "json",
+						url : HOSTURL+"getDocument",
+						data : {
+							sessionId : SESSIONID,
+							objectName : "tBlog",
+							columnName : "Attachment",
+							id : tzid,
+							entryNo : null
+						},
+						success: function(data){
+						console.log(JSON.stringify(data));
+      					var datas=JSON.parse(JSON.stringify(data));
+      					if(datas.result==1){
+      						var a=document.getElementById('fj');
+      						a.innerHTML='<br>'+datas.fileName;
+      						var filePath=JSON.stringify(datas.filePath);
+      						a.addEventListener('tap',function(){
+      							downloadDocument(filePath.substring(1,filePath.length-1),datas.fileName,datas.originalName);
+      						});
+      						//console.log(JSON.stringify(datas.document.documentData));
+      						
+      					
+      				}
+						},
+      				error:function(xhr,type,errorThrow){
+      					console.log(xhr+'---'+type+'---'+errorThrow);
+      				}
+				});
+				function downloadDocument(dataStr,fileName,originalName){
+					console.log(HOSTURL+dataStr+"----"+fileName+"---"+originalName);
+					plus.io.resolveLocalFileSystemURL("_downloads/"+originalName,function(fs){
+						plus.runtime.openFile("_downloads/"+originalName);
+					},function(error){
+						//用dataHandler请求文件下载
+      						var dtask=plus.downloader.createDownload(HOSTURL+dataStr,{
+      							dataStr : dataStr,
+      							fileName : fileName
+      						},
+      						function(data,status){
+      							if(status==200){
+      								console.log(data.filename);
+      								plus.runtime.openFile(data.filename);
+      							}else{
+      								console.log("failed:"+status);
+      							}
+      						});
+      						dtask.start();
+					});
+					
+      			}
+				
+			});
+		</script>
+	</body>
+
+</html>

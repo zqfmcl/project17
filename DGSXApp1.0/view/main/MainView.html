@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+
+			});
+			
+			mui.plusReady(function(){
+				mui.openWindow({
+						url : 'main_xxxx.html',
+						id : 'main_xxxx.html',
+						styles : {
+							top : '100px'
+							
+						},
+						createNew : false
+					});
+				var btn1=document.getElementById("mainHeadBtn1");
+				var btn2=document.getElementById("mainHeadBtn2");
+				var btn3=document.getElementById("mainHeadBtn3");
+				var btn4=document.getElementById("mainHeadBtn4");
+				var btnArr=[btn1,btn2,btn3,btn4];
+				//学生信息按钮点击事件
+				document.getElementById('mainHeadBtn1').addEventListener('tap',function(){
+					tapBtns(btn1);
+					mui.openWindow({
+						url : 'main_xxxx.html',
+						id : 'main_xxxx.html',
+						styles : {
+							top : '100px'
+							
+						},
+						createNew : false
+					});
+				});
+				//学生管理按钮点击事件
+				document.getElementById('mainHeadBtn2').addEventListener('tap',function(){
+					tapBtns(btn2);
+					mui.openWindow({
+						url : 'main_xsgl.html',
+						id : 'main_xsgl.html',
+						styles : {
+							top : '100px'
+							
+						},
+						createNew : false
+					});
+				});
+				//企业信息按钮点击事件
+				document.getElementById('mainHeadBtn3').addEventListener('tap',function(){
+					tapBtns(btn3);
+					mui.openWindow({
+						url : 'main_qyxx_f.html',
+						id : 'main_qyxx_f.html',
+						styles : {
+							top : '100px',
+							height :window.screen.height-120+'px'
+						},
+						createNew : false
+					});
+				});
+				//通知公告按钮点击事件
+				document.getElementById('mainHeadBtn4').addEventListener('tap',function(){
+					tapBtns(btn4);
+					mui.openWindow({
+						url : 'main_tzgg_f.html',
+						id : 'main_tzgg_f.html',
+						styles : {
+							top : '100px',
+							height :window.screen.height-120+'px'
+						},
+						createNew : false
+					});
+				});
+					//定义headBtn的点击动画
+			function tapBtns(btn){
+				for(var i=0;i<btnArr.length;i++){
+					if(btnArr[i].id==btn.id){
+						//当前按钮修改颜色
+							btnArr[i].style.color="rgb(80,150,219)";
+							btnArr[i].style.backgroundColor="white";
+						}else{
+							//其他按钮还原默认颜色
+							btnArr[i].style.color="white";
+							btnArr[i].style.backgroundColor="transparent";
+						}
+				}
+			}
+			});
+		</script>
+		<div id="mainHead" style="background-color: rgb(80,150,219); color: floralwhite; padding: 10px 25px; height: 100px;">
+			<!--<label style="text-align: center;display: block;">顶岗实习管理平台</label>-->
+			<center>顶岗实习管理平台</center>
+			<div id="mainHead-buttons" style="border: 1px solid floralwhite;margin-top: 10px;padding: 0px; border-radius: 4px;">
+				<button id="mainHeadBtn1" class="mui-btn" style="width: 25%;background-color: white;padding: 5px;margin: 0px; border:0 solid #ccc;display: inline;font-size: 10pt;color: rgb(80,150,219);">学生信息</button>
+				<button id="mainHeadBtn2" class="mui-btn" style="width: 25%;background-color: transparent;padding: 5px;margin-left: -5px; border:0 solid #ccc;display: inline;font-size: 10pt;color: white;">学生管理</button>
+				<button id="mainHeadBtn3" class="mui-btn" style="width: 25%;background-color: transparent;padding: 5px;margin-left: -5px; border:0 solid #ccc;display: inline;font-size: 10pt;color: white;">企业信息</button>
+				<button id="mainHeadBtn4" class="mui-btn" style="width: 25%;background-color: transparent;padding: 5px;margin-left: -5px; border-width: 0px;display: inline;font-size: 10pt;color: white;">通知公告</button>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script type="text/javascript">
+			var JLIndex=0;
+			var hasMore=false;
+			mui.init({
+				pullRefresh: {
+					container: '#refreshContainer',
+					down: {
+						callback: downRefresh,
+						auto:true
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: upLoadRefresh
+					}
+				}
+			});
+			function showInfo(id,title) {
+				//console.log('showInfo');
+				mui.openWindow({
+					url: '../tz/tzDetail.html',
+					id: 'tzDetail.html',
+					styles: {},
+					extras: {
+						tzid: id,
+						tztitle: title
+					},
+					createNew: false, //是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+					show: {
+						event: 'titleUpdate', //页面显示时机，默认为titleUpdate事件时显示
+					},
+					waiting: {
+						title: '正在加载...', //等待对话框上显示的提示内容
+					}
+				});
+			}
+			function downRefresh(){
+				JLIndex=1;
+				setTimeout(function(){
+					mui.ajax({
+						type : "POST",
+						dataType : "json",
+						url : HOSTURL+"Query",
+						data : {
+							sessionId : SESSIONID,
+							objectName : "tBlog",
+							params : null,
+							condition : "",
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						success: function(data){
+						//console.log(JSON.stringify(data));
+      					var datas=JSON.parse(JSON.stringify(data));
+      					if(datas.result==1){
+      						var keyValues=datas.keyValues;
+      						var table=document.getElementById('4_tzgg');
+      						if (JLIndex == 1) { //下拉刷新需要先清空数据
+                                table.innerHTML = '';// 在这里清空可以防止刷新时白屏
+                            }
+      						var ul=document.createElement("ul");
+      						document.getElementById('4_tzggScroll').appendChild(ul);
+      						ul.className="mui-table-view mui-table-view-chevron";
+      						for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								li.innerHTML = '<a class="mui-navigate-right" onclick="showInfo('+keyValues[i]['ID']+',\''+keyValues[i]['Title']+'\')">' + keyValues[i]['Title'] + '</a>';
+								table.appendChild(li);
+      						}
+      						
+      					}
+      					
+      				},
+      				error:function(xhr,type,errorThrow){
+      					mui.toast(xhr+'---'+type+'---'+errorThrow);
+      				}
+					});
+					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					//mui('#refreshContainer').pullRefresh().refresh(true);
+				},1000);
+			}
+			function upLoadRefresh(){
+				JLIndex+=1;
+				setTimeout(function(){
+					mui.ajax({
+						type : "POST",
+						dataType : "json",
+						url : HOSTURL+"Query",
+						data : {
+							sessionId : SESSIONID,
+							objectName : "tBlog",
+							params : null,
+							condition : "",
+							queryOptionStr: JSON.stringify({
+								batchNo : JLIndex,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						success: function(data){
+						console.log(JSON.stringify(data));
+      					var datas=JSON.parse(JSON.stringify(data));
+      					if(datas.result==1){
+      						hasMore=datas.hasMore;
+      						var keyValues=datas.keyValues;
+      						var table=document.getElementById('4_tzgg');
+      						var ul=document.createElement("ul");
+      						document.getElementById('4_tzggScroll').appendChild(ul);
+      						ul.className="mui-table-view mui-table-view-chevron";
+      						for(var i=0;i<keyValues.length;i++){
+      							var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+									li.innerHTML = '<a class="mui-navigate-right" onclick="showInfo('+keyValues[i]['ID']+',\''+keyValues[i]['Title']+'\')">' + keyValues[i]['Title'] + '</a>';
+								table.appendChild(li);
+      						}
+      						mui('#refreshContainer').pullRefresh().endPullupToRefresh(!hasMore);
+      					}
+      					
+      				},
+      				error:function(xhr,type,errorThrow){
+      					mui.toast(xhr+'---'+type+'---'+errorThrow);
+      				}
+					});
+				},1000);
+			}
+			mui.plusReady(function(){
+				setCharacters();
+				mui("#refreshContainer").on('tap', '.mui-navigate-right', function (event) {
+				this.click();
+				});
+			});
+		</script>
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+    			<div id='4_tzggScroll'class="mui-scroll">
+      			<ul id="4_tzgg" class="mui-table-view">
+      								
+				</ul>
+			</div>
+		</div>
+	</body>
+
+</html>

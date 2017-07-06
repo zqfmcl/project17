@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>school</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <display-name>FileUploadServlet</display-name>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <servlet-class>upLoadFile.FileUploadServlet</servlet-class>
+    <init-param>
+      <param-name>savePath</param-name>
+      <param-value>uploads/flash</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <url-pattern>/servlet/fileServlet</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>Uploader</servlet-name>
+    <servlet-class>anubis.upload.UploaderServlet</servlet-class>
+    <init-param>
+    	<param-name>uploadPath</param-name>
+    	<param-value>uploads/attachments</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Uploader</servlet-name>
+    <url-pattern>/uploader</url-pattern>
+  </servlet-mapping>	
+  
+  
+  <servlet>
+    <servlet-name>ConnectorServlet</servlet-name>
+    <servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>
+    <init-param>
+      <param-name>XMLConfig</param-name>
+      <param-value>/WEB-INF/config.xml</param-value>
+    </init-param>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConnectorServlet</servlet-name>
+    <url-pattern> /ckfinder/core/connector/java/connector.java </url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>NRYtransform</servlet-name>
+    <servlet-class>school.date.NRYtransform.NRYtransform</servlet-class>
+    <init-param>
+      <param-name>attachment_savePath</param-name>
+      <param-value>uploads/attachments</param-value>
+    </init-param>
+  </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>NRYtransform</servlet-name>
+    <url-pattern>/servlet/NRYtransform</url-pattern>
+  </servlet-mapping>
+
+  <error-page>  
+    <error-code>500</error-code>  
+    <location>/errorpage/500.jsp</location>  
+  </error-page>     
+  <error-page>  
+    <error-code>404</error-code>  
+    <location>/errorpage/404.jsp</location>  
+  </error-page>  
+</web-app>

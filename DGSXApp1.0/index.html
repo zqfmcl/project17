@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <!--<script src="js/app.js"></script>-->
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	var username;
+      	var password;
+      	//var hosturl="http://192.168.0.119:8888/DGSXWebSforApp/";
+      	var hosturl="http://218.56.106.137:8080/DGSXWebSforApp/";
+      	mui.plusReady(function(){
+      		//plus.storage.removeItem('sessionId');
+      		//plus.storage.getItem('sessionId1');
+      		var length=plus.storage.getLength();
+      		var hasSession=0;
+      		for (var i = 0; i < length; i++) {
+      			if(plus.storage.key(i)=='sessionId'){
+      				hasSession++;
+      				break;
+      			}
+      		}
+      		if(hasSession==0||length==0){
+      			plus.storage.setItem('sessionId',"");
+      		}
+      		document.getElementById("loginBtn").addEventListener('tap',function(){
+      			//mui.toast("点击了登录");
+      			username=document.getElementById("username").value;
+      			password=document.getElementById("password").value;
+      			if(username=="" || password ==""){
+      				mui.toast("账号或密码不能为空");
+      			}else{
+      				getSessionId();
+      			}
+      			
+      		}); 
+      		
+      	});
+      	//获取sessionId
+      	function getSessionId(){
+      		if(plus.storage.getItem('sessionId')==""){
+      			mui.ajax({
+      				type:"GET",
+      				dataType : "json",
+      				url : hosturl+"LoginWS",
+      				data : {
+      					
+      				},
+      				success: function(msg){
+      					var msgs=JSON.parse(JSON.stringify(msg));
+      					if(msgs.result>0){
+      						plus.storage.setItem("sessionId",msgs.sessionId);
+      						var sessionId=plus.storage.getItem("sessionId");
+      						//验证用户登录
+      						Login(username,password,sessionId);
+      					}
+      				},
+      				error:function(xhr,type,errorThrow){
+      					mui.toast("getsessionid"+xhr+'---'+type+"----"+errorThrow)
+      				}
+      	});
+      		}else{
+      			Login(username,password,plus.storage.getItem('sessionId'));
+      		}
+      		
+      		}
+      	//验证用户信息
+      	function Login(username,password,sessionId){
+      		mui.ajax({
+      				type:"POST",
+      				dataType : "json",
+      				url : hosturl+"Login",
+      				data : {
+      					userId : username,
+      					password : password,
+      					sessionId : sessionId
+      				},
+      				success: function(msg){
+      					var msgs=JSON.parse(JSON.stringify(msg));
+      					if(msgs.result>0){
+      						console.log(JSON.stringify(msg));
+      						var yhidStr=msgs.keyValues[0].ID;
+      						var yhidArr=splitStr(yhidStr);
+      						//console.log(yhidArr[0]);
+							//持久化存储用户名密码
+							plus.storage.setItem('UserID',username);
+							plus.storage.setItem('Password',password);
+							plus.storage.setItem('YHID',yhidArr[0]);
+							//获取学生基本信息
+							var linkStuid=msgs.keyValues[0].LinkStu;
+							var idArr=splitStr(linkStuid);
+							plus.storage.setItem('XSID',idArr[0]);
+							getYHJBXX(idArr[0]);
+							//登陆成功进入主页面
+      						mui.openWindow({
+      							url : "view/main/MainView.html",
+      							id :'mainView'
+      						});
+      					}else{
+      						mui.toast("账号或密码错误");
+      					}
+      				},
+      				error:function(xhr,type,errorThrow){
+      					mui.toast("账号或密码错误");
+      				}
+      	});
+      	}
+      	//获取用户基本信息
+      	function getYHJBXX(linkStuid){
+      		//console.log('getyhjbxx');
+      		//获取学生基本信息
+      		mui.ajax({
+      				type:"POST",
+      				dataType : "json",
+      				url : hosturl+"Query",
+      				data : {
+      					sessionId : plus.storage.getItem('sessionId'),
+      					objectName : 'E_XSJBXX',
+      					params : null,
+      					condition : 'ID='+linkStuid,
+      					queryOptionStr : JSON.stringify({
+								batchNo : 1,
+								batchSize : 20,
+								valueOption : 2,
+								orderBy : "",
+								queryId : ""
+							})
+      				},
+      				success: function(msg){
+      					var msgs=JSON.parse(JSON.stringify(msg));
+      					if(msgs.result>0){
+      						var xmStr=msgs.keyValues[0].xm;
+      						var xhStr=msgs.keyValues[0].xh;
+      						var zybStr=msgs.keyValues[0].zyb;
+      						var zyStr=msgs.keyValues[0].zy;
+      						var bjStr=msgs.keyValues[0].bj;
+      						var xmArr=splitStr(xmStr);
+      						plus.storage.setItem("XM",xmArr[0]);
+      						var xhArr=splitStr(xhStr);
+      						plus.storage.setItem("XH",xhArr[0]);
+      						var zybArr=splitStr(zybStr);
+      						plus.storage.setItem("ZYBID",zybArr[0]);
+      						plus.storage.setItem("ZYBNAME",zybArr[1]);
+      						var zyArr=splitStr(zyStr);
+      						plus.storage.setItem("ZYID",zyArr[0]);
+      						plus.storage.setItem("ZYNAME",zyArr[1]);
+      						var bjArr=splitStr(bjStr);
+      						plus.storage.setItem("BJID",bjArr[0]);
+      						plus.storage.setItem("BJNAME",bjArr[1]);
+      						
+      					}
+      				},
+      				error:function(xhr,type,errorThrow){
+      					console.log("getYHJBXX"+xhr+"---"+type+"---"+errorThrow);
+      				}
+      	});
+      	//获取学生实习信息
+      		mui.ajax({
+      				type:"POST",
+      				dataType : "json",
+      				url : hosturl+"Query",
+      				data : {
+      					sessionId : plus.storage.getItem('sessionId'),
+      					objectName : 'E_XSSXXX',
+      					params : null,
+      					condition : 'xs='+linkStuid+' and (ZT=1 or ZT=3)',
+      					queryOptionStr : JSON.stringify({
+								batchNo : 1,
+								batchSize : 20,
+								valueOption : 2,
+								orderBy : "",
+								queryId : ""
+							})
+      				},
+      				success: function(msg){
+      					//console.log(JSON.stringify(msg));
+      					var msgs=JSON.parse(JSON.stringify(msg));
+      					if(msgs.result>0){
+      						if(msgs.keyValues!=null){
+      						var qyStr=msgs.keyValues[0].szqy;
+      						var qyArr=splitStr(qyStr);
+      						plus.storage.setItem("QYNAME",qyArr[1]);
+      						plus.storage.setItem('QYID',qyArr[0]);
+      						var gwStr=msgs.keyValues[0].gw;
+      						var gwArr=splitStr(gwStr);
+      						plus.storage.setItem('GWID',gwArr[0]);
+      						plus.storage.setItem('GWNAME',gwArr[1]);
+      						}else{
+      						plus.storage.setItem("QYNAME","");
+      						plus.storage.setItem('QYID',"");
+      						plus.storage.setItem('GWID',"");
+      						plus.storage.setItem('GWNAME',"");
+      						}
+      					}
+      				},
+      				error:function(xhr,type,errorThrow){
+      					console.log("getYHJBXX"+xhr+"---"+type+"---"+errorThrow);
+      				}
+      	});
+      	}
+      	function splitStr(str){
+			//["11","jdkfjd"]
+			var length=str.length;
+			var str1=str.substring(1,length-1);
+			var strArr=str1.split(",");
+			var strArr1=[];
+			for(var i=0;i<strArr.length;i++){
+				var lengths=strArr[i].length;
+				var strs=strArr[i].substring(1,lengths-1);
+				strArr1[strArr1.length]=strs;
+			}
+			return strArr1;
+		}
+    </script>
+</head>
+<body>
+	<div class="mui-bar mui-bar-tab" style="height: 20px;line-height: 20px; font-size: 10px; text-align: center;">
+		这是底部信息
+	</div>
+	<div class="mui-content">
+		<div class="mui-content-padded" style="margin: 5px;">
+			<from class="mui-input-group">
+				<div class="mui-input-row">
+					<label>用户名</label>
+					<input type="text" id="username" class="mui-input-clear" placeholder="用户名" />
+					
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input type="password" id="password" class="mui-input-clear mui-input-password" placeholder="密码" />
+					
+				</div>
+			</from>
+		</div>
+	</div>
+	<div style="margin-top: 20px; text-align: center;">
+		<button class="mui-btn mui-btn-primary" id="loginBtn">登录</button>
+	</div>
+</body>
+</html>

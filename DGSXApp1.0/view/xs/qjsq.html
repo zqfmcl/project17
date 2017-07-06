@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<style>
+			.mui-input-row .mui-btn+input, .mui-input-row label+input, .mui-input-row:last-child {
+    				/* background: 0 0; */
+   				background-color: white;
+   				
+			}
+			.mui-input-row{
+				margin-top: 10px;
+			}
+			.mui-content{
+				margin-right: 10px;
+			}
+			.mui-input-row label {
+    				background: #efeff4;
+			}
+			
+		</style>
+		
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">请假申请</h1>
+		</header>
+		<div class="mui-content" style="margin-bottom: 50px;">
+		    <div class="mui-input-row">
+				<label>所在企业</label>
+				<button id="szqy" style="width: 65%; border-width: 0px;">
+					点击选择
+				</button>
+				
+			</div>
+			<div class="mui-input-row">
+				<label>岗位</label>
+				<button id="gw" style="width: 65%; border-width: 0px;">
+					点击选择
+				</button>
+			</div>
+			<div class="mui-input-row">
+				<label>请假开始时间</label>
+				<button id="kssj" style="width: 65%; border-width: 0px;">
+					点击选择
+				</button>
+			</div>
+			<div class="mui-input-row">
+				<label>请假结束时间</label>
+				<button id="jssj" style="width: 65%; border-width: 0px;">
+					点击选择
+				</button>
+			</div>
+			<div class="mui-input-row" id="qjtsdiv">
+				<label>请假天数</label>
+				<!--<input type="text" id="qjts"  value=""/>-->
+				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='100' style="float: left;">
+  					<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+  					<input id="qjts" class="mui-numbox-input" type="number" />
+  					<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+				</div>
+			</div>
+			<div class="mui-input-row">
+				<label>请假原因</label>
+				<input type="text" id="qjyy" class="mui-input-clear" style="height: 100px;" value=""/>
+			</div>
+			<div class="mui-input-row" style="margin-bottom: 10px;">
+				<label style="height: 100px;">备注</label>
+				<input type="text" id="bz" class="mui-input-clear" style="height: 100px;" value=""/>
+			</div>
+			<div class="mui-bar mui-bar-footer">
+			<button id='submit' class="mui-btn mui-btn-block mui-btn-primary">提交</button>
+			</div>
+		</div>
+		<script type="text/javascript">
+			mui.init();
+			var qyid="";
+			var gwid="";
+			var qjts='',qjyy='',bz='';
+			var kssj=null;
+			var jssj=null;
+			var dtPicker=new mui.DtPicker({
+				type:'date',
+				beginDate:new Date(),
+				endDate : new Date(2120,12,30),
+				labels : ['Year','Mon','Day']
+			});
+
+			mui.plusReady(function(){
+				setCharacters();
+				qyid=QYID;
+				gwid=GWID;
+				document.getElementById('szqy').innerHTML=QYNAME;
+				document.getElementById('gw').innerHTML=GWNAME;
+				document.getElementById('kssj').addEventListener('tap',function(){
+					dtPicker.show(function(selectItems){
+						document.getElementById('kssj').innerHTML=selectItems;
+						kssj=selectItems.y.value+selectItems.m.value+selectItems.d.value;
+					})
+				});
+				document.getElementById('jssj').addEventListener('tap',function(){
+					dtPicker.show(function(selectItems){
+						document.getElementById('jssj').innerHTML=selectItems;
+						jssj=selectItems.y.value+selectItems.m.value+selectItems.d.value;
+					})
+				});
+				document.getElementById('submit').addEventListener('tap',function(){
+					var qjts=document.getElementById('qjts').value;
+					var qjyy=document.getElementById('qjyy').value;
+					var bz=document.getElementById('bz').value;
+					startProcess(qyid,gwid,kssj,jssj,qjts,qjyy,bz);
+				});
+			});
+			function startProcess(qyid,gwid,kssj,jssj,qjts,qjyy,bz){
+				mui.ajax({
+					url : HOSTURL+'doWorkAction',
+					type : 'POST',
+					dataType : 'json',
+					data : {
+								sessionId:SESSIONID,
+								workflowName : 'WF_XSQJSQGZL',
+								instanceId : -1,
+								actionId : 4,
+								params : JSON.stringify({
+									xs : XSID,
+									xh : XH,
+									zyb : ZYBID,
+									zy : ZYID,
+									bj : BJID,
+									szqy : qyid,
+									gw : gwid,
+									qjkssj : kssj,
+									qjjssj : jssj,
+									qjts : qjts,
+									qjyy : qjyy,
+									bz : bz
+									
+								}),
+								caller : YHID,
+								summary : ''
+					},
+					success : function(data){
+						console.log(JSON.stringify(data));
+						if(data.result==1){
+							plus.nativeUI.toast("提交成功！");
+							var self=plus.webview.currentWebview();
+							self.close();
+						}else{
+							plus.nativeUI.toast("提交失败！");
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+								console.log(xhr+"---"+type+"---"+errorThrown);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

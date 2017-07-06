@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="gb2312" standalone="no"?>
+<!DOCTYPE workflow SYSTEM "file:///E:/javaworkplace/DGSXHBPlusServer/WebRoot/workflow/workflow_2_8_abs.dtd">
+<workflow>
+  <meta name="workflow.category"></meta>
+  <meta name="Designer">Studio</meta>
+  <meta name="created">2016-12-13 11:03:04</meta>
+  <meta name="modify">2017-03-17 15:06:44</meta>
+  <meta name="Describe">学生签约申请工作流</meta>
+  <meta name="WorkflowName">WF_XSQYSQGZL</meta>
+  <meta name="version"></meta>
+  <object  name="WO_XSQYSQ" editAttribute="0" >
+  </object>
+  <initial-actions>
+    <action id="0" name="开始">
+      <meta name="NodeType">0</meta>
+      <results>
+        <unconditional-result id="2" old-status="完成" status="待处理" step="3">
+        </unconditional-result>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="1" name="结束">
+      <meta name="finish">true</meta>
+      <meta name="NodeType">1</meta>
+    </step>
+    <step id="3" name="学生申请">
+      <meta name="NodeType">2</meta>
+      <object  name="WO_XSQYSQ" editAttribute="0" >
+        <columns>
+          <column  name="ID" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="InstID" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="xs" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="xh" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="zyb" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="zy" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="bj" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sqqy" disabled="false" hidden="false" summary="false">
+          </column>
+          <column  name="sqgw" disabled="false" hidden="false" summary="false">
+          </column>
+          <column  name="sfxysm" disabled="false" hidden="false" summary="false">
+          </column>
+          <column  name="sqsj" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sxsj" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="qyzdls" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="qysm" disabled="false" hidden="true" summary="false">
+          </column>
+        </columns>
+      </object>
+      <notify >
+      </notify>
+      <actions>
+        <action id="4" name="提交">
+          <meta name="NodeType">5</meta>
+          <results>
+            <unconditional-result id="22" old-status="完成" status="待处理" step="19">
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="10" name="学校审核" owner="0,$O{21},$R{16},$R{10}">
+      <meta name="step.reject.mode">prev</meta>
+      <meta name="approve.invisible.steps">5</meta>
+      <meta name="NodeType">16</meta>
+      <meta name="step.allow.reject">true</meta>
+      <meta name="approve.mode">true</meta>
+      <meta name="reject.reason.mandatory">true</meta>
+      <object  name="WO_XSQYSQ" editAttribute="0" >
+        <columns>
+          <column  name="ID" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="InstID" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="xs" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="xh" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="zyb" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="zy" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="bj" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sqqy" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sqgw" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sfxysm" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sqsj" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sxsj" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="qyzdls" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="qysm" disabled="true" hidden="false" summary="false">
+          </column>
+        </columns>
+      </object>
+      <notify >
+      </notify>
+      <actions>
+        <action id="11" name="同意">
+          <meta name="NodeType">17</meta>
+          <meta name="approve.action">true</meta>
+          <pre-functions>
+            <function id="0" name="abs.FormInsert" type="class">
+              <arg name="$F{zy}">O_WORKFLOW.zy</arg>
+              <arg name="class.name">com.apex.workflow.FormInsertFunction</arg>
+              <arg name="$F{bj}">O_WORKFLOW.bj</arg>
+              <arg name="$F{sqgw}">O_WORKFLOW.sqgw</arg>
+              <arg name="$F{xh}">O_WORKFLOW.xh</arg>
+              <arg name="Table">E_SFXYMD</arg>
+              <arg name="$F{sftysfxy}"></arg>
+              <arg name="$F{sqsj}">O_WORKFLOW.sqsj</arg>
+              <arg name="$F{zyb}">O_WORKFLOW.zyb</arg>
+              <arg name="$F{sftyygsqdsfxy}"></arg>
+              <arg name="$F{sqqy}">O_WORKFLOW.sqqy</arg>
+              <arg name="$F{nj}"></arg>
+              <arg name="$F{xs}">O_WORKFLOW.xs</arg>
+            </function>
+            <function id="0" name="abs.FormInsert" type="class">
+              <arg name="$F{gw}">O_WORKFLOW.sqgw</arg>
+              <arg name="$F{ZT}">1</arg>
+              <arg name="$F{zy}">O_WORKFLOW.zy</arg>
+              <arg name="class.name">com.apex.workflow.FormInsertFunction</arg>
+              <arg name="$F{QYZDLS}">O_WORKFLOW.qyzdls</arg>
+              <arg name="$F{bj}">O_WORKFLOW.bj</arg>
+              <arg name="$F{sqgw}">O_WORKFLOW.sqgw</arg>
+              <arg name="$F{xh}">O_WORKFLOW.xh</arg>
+              <arg name="$F{bzr}">O_WORKFLOW.xs.bzr</arg>
+              <arg name="Table">E_XSSXXX</arg>
+              <arg name="$F{zgzt}">0</arg>
+              <arg name="$F{SXJSSJ}">null</arg>
+              <arg name="$F{szqy}">O_WORKFLOW.sqqy</arg>
+              <arg name="$F{mssj}">O_WORKFLOW.sqsj</arg>
+              <arg name="$F{zyb}">O_WORKFLOW.zyb</arg>
+              <arg name="$F{sxsj}">O_WORKFLOW.sxsj</arg>
+              <arg name="$F{sqqy}">O_WORKFLOW.sqqy</arg>
+              <arg name="$F{nj}"></arg>
+              <arg name="$F{xs}">O_WORKFLOW.xs</arg>
+              <arg name="$F{SXKSSJ}">O_WORKFLOW.sxsj</arg>
+            </function>
+            <function id="0" name="abs.FormInsert" type="class">
+              <arg name="$F{clnr}">'学生签约流程处理'</arg>
+              <arg name="$F{clr}">$Login.User.LinkEmployee.xm</arg>
+              <arg name="$F{bz}"></arg>
+              <arg name="class.name">com.apex.workflow.FormInsertFunction</arg>
+              <arg name="$F{clsj}">$DateTime.Now</arg>
+              <arg name="Table">Entity_ZDJSRZ</arg>
+            </function>
+            <function id="0" name="abs.Expression" type="null">
+              <arg name="expression">LB_Message(O_WORKFLOW.initiator,&quot;你已经成功与'&quot;+O_WORKFLOW.sqqy.qymc+&quot;'达成实习意向&quot;,$Login.User)</arg>
+              <arg name="class.name"> com.apex.livebos.workflow.ExecExpressionFunction</arg>
+            </function>
+            <function id="0" name="abs.FormInsert" type="class">
+              <arg name="$F{gw}">O_WORKFLOW.sqgw</arg>
+              <arg name="$F{zy}">O_WORKFLOW.zy</arg>
+              <arg name="class.name">com.apex.workflow.FormInsertFunction</arg>
+              <arg name="$F{bj}">O_WORKFLOW.bj</arg>
+              <arg name="$F{QYZDLS}">O_WORKFLOW.qyzdls</arg>
+              <arg name="$F{xh}">O_WORKFLOW.xh</arg>
+              <arg name="Table">Entity_XSSXXXJL</arg>
+              <arg name="$F{bzr}">O_WORKFLOW.xs.bzr</arg>
+              <arg name="$F{szqy}">O_WORKFLOW.sqqy</arg>
+              <arg name="$F{zyb}">O_WORKFLOW.zyb</arg>
+              <arg name="$F{SJ}">O_WORKFLOW.sxsj</arg>
+              <arg name="$F{sxlx}">1</arg>
+              <arg name="$F{xs}">O_WORKFLOW.xs</arg>
+            </function>
+            <function id="0" name="abs.ExecSQL" type="class">
+              <arg name="SQL">[&quot;update E_XSJBXX set sxzt=1 ,sxzdjs={1} where id={0}&quot;,[{&quot;expression&quot;:&quot;O_WORKFLOW.xs&quot;,&quot;scale&quot;:&quot;&quot;,&quot;length&quot;:&quot;&quot;,&quot;type&quot;:&quot;0&quot;},{&quot;expression&quot;:&quot;O_WORKFLOW.qyzdls&quot;,&quot;scale&quot;:&quot;&quot;,&quot;length&quot;:&quot;&quot;,&quot;type&quot;:&quot;0&quot;}]]</arg>
+              <arg name="class.name">com.apex.workflow.ExecSqlFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="17" old-status="完成" status="待处理" step="1">
+            </unconditional-result>
+          </results>
+        </action>
+        <action id="16" name="拒绝">
+          <meta name="NodeType">17</meta>
+          <meta name="approve.action">true</meta>
+          <results>
+            <unconditional-result id="18" old-status="完成" status="待处理" step="1">
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="19" name="企业审核" owner="0">
+      <meta name="step.reject.mode">prev</meta>
+      <meta name="NodeType">2</meta>
+      <meta name="step.allow.reject">true</meta>
+      <meta name="reject.reason.mandatory">true</meta>
+      <object  name="WO_XSQYSQ" editAttribute="0" >
+        <columns>
+          <column  name="ID" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="InstID" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="xs" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="xh" disabled="false" hidden="true" summary="false">
+          </column>
+          <column  name="zyb" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="zy" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="bj" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sqqy" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sqgw" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sfxysm" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sqsj" disabled="true" hidden="false" summary="false">
+          </column>
+          <column  name="sxsj" disabled="false" hidden="false" summary="false">
+          </column>
+          <column  name="qyzdls" disabled="false" hidden="false" summary="false">
+          </column>
+          <column  name="qysm" disabled="false" hidden="false" summary="false">
+          </column>
+        </columns>
+      </object>
+      <dynOwners>
+        <dynOwner  type="0" describe="动态用户" >
+          <expression><![CDATA[
+["tuser.id in (select id from  tuser where userid in ( select gh from E_QYZDJS where E_QYZDJS.ssqy={0}))",[{"expression":"O_WORKFLOW.sqqy.ID","scale":0,"length":0,"type":0}]]]]></expression>
+          </dynOwner>
+              </dynOwners>
+      <notify >
+      </notify>
+      <actions>
+        <action id="20" name="同意">
+          <meta name="NodeType">5</meta>
+          <results>
+            <unconditional-result id="23" old-status="完成" status="待处理" step="10">
+            </unconditional-result>
+          </results>
+        </action>
+        <action id="21" name="拒绝">
+          <meta name="NodeType">5</meta>
+          <results>
+            <unconditional-result id="24" old-status="完成" status="待处理" step="1">
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

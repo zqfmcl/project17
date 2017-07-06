@@ -1,0 +1,467 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<style>
+			.mui-input-row .mui-btn+input, .mui-input-row label+input, .mui-input-row:last-child {
+    				/* background: 0 0; */
+   				background-color: white;
+   				
+			}
+			.mui-input-row{
+				margin-top: 10px;
+			}
+			.mui-content{
+				margin-right: 10px;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		 	<header class="mui-bar mui-bar-nav">
+		 	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		 	    <h1 class="mui-title">信息修改申请</h1>
+		 	</header>
+		<div class="mui-content" style="margin-bottom: 50px;">
+			
+		    <div class="mui-input-row">
+					<label>姓名</label>
+					<input type="text" id="xm" class="mui-input-clear" />
+			</div>
+			<div class="mui-input-row">
+					<label>性别</label>
+					<select id="xb">
+						<option value="0" selected="">男</option>
+						<option value="1" selected="">女</option>
+					</select>
+			</div>
+			<div class="mui-input-row">
+					<label>年龄</label>
+					<input type="text" id="nl" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+				<label>照片</label>
+				<button id="zp">点击上传</button>
+				<!--<span id="zpName">没有选择文件</span>-->
+				<img id="getzp" />
+			</div>
+			<div class="mui-input-row">
+				<label>专业部</label>
+				<button id="zyb" style="width: 65%; border-width: 0px;">
+					点击选择
+				</button>
+				
+			</div>
+			<div class="mui-input-row">
+				<label>专业</label>
+				<button id="zy" style="width: 65%; border-width: 0px;">
+					点击选择
+				</button>
+			</div>
+			<div class="mui-input-row">
+				<label>班级</label>
+				<button id="bj" style="width: 65%; border-width: 0px;">
+					点击选择
+				</button>
+			</div>
+			<!--<div class="mui-input-row">
+				<label>实习管理教师</label>
+				<select id="sxgljs">
+						<option value="0" selected="">男</option>
+						<option value="1" selected="">女</option>
+				</select>
+			</div>-->
+			<div class="mui-input-row">
+					<label>身高</label>
+					<input type="text" id="sg" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>体重</label>
+					<input type="text" id="tz" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>血型</label>
+					<input type="text" id="xx" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>家庭地址</label>
+					<input type="text" id="jtdz" class="mui-input-clear" style="height: 100px;" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>联系电话</label>
+					<input type="text" id="lxdh" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>QQ</label>
+					<input type="text" id="qq" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>微信</label>
+					<input type="text" id="wx" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>邮箱</label>
+					<input type="text" id="yx" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>父亲姓名</label>
+					<input type="text" id="fqxm" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>父亲联系电话</label>
+					<input type="text" id="fqlxdh" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>母亲姓名</label>
+					<input type="text" id="mqxm" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-input-row">
+					<label>母亲联系电话</label>
+					<input type="text" id="mqlxdh" class="mui-input-clear" value=""/>
+			</div>
+			<div class="mui-bar mui-bar-footer">
+			<button id='submit' class="mui-btn mui-btn-block mui-btn-primary">提交</button>
+			</div>
+			
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script type="text/javascript">
+			//表单参数
+			var xm="",xb=null,nl=null,zyb=null,zy=null,bj=null,sxgljs=null,sg=null,tz=null,xx=null,jtdz=null,lxdh=null,qq=null,wx=null,yx=null,
+			fqxm=null,fqlxdh=null,mqxm=null,mqlxdh=null;
+			var zpPath="";
+			var zpName="";
+			var zpLength=0;
+			var zpBase64=null;
+			var bdjlID=null;
+			window.addEventListener("backToZYB",function(event){
+				zyb=event.detail.zybID;
+				//console.log(zyb);
+				document.getElementById("zyb").innerHTML=event.detail.zybName;
+			});
+			window.addEventListener("backToZY",function(event){
+				zy=event.detail.zyID;
+				document.getElementById("zy").innerHTML=event.detail.zyName;
+			});
+			window.addEventListener("backToBJ",function(event){
+				bj=event.detail.bjID;
+				document.getElementById("bj").innerHTML=event.detail.bjName;
+			});
+			mui.init()
+			mui.plusReady(function(){
+				setCharacters();
+				//获取当前用户的基本信息
+				getJBXX();
+				//给专业部选择器添加点击事件 显示选择页面
+				document.getElementById("zyb").addEventListener('tap',function(event){
+					mui.openWindow({
+						url:"zyb.html",
+						id : "zyb.html"
+					});
+				});
+				//给专业选择器添加点击事件 显示选择页面
+				document.getElementById("zy").addEventListener('tap',function(event){
+					mui.openWindow({
+						url:"zy.html",
+						id : "zy.html",
+						extras :{
+							zybID : zyb
+						}
+					});
+				});
+				//给班级选择器添加点击事件 显示选择页面
+				document.getElementById("bj").addEventListener('tap',function(event){
+				mui.openWindow({
+						url:"bj.html",
+						id : "bj.html",
+						extras : {
+							zyID : zy
+						}
+					});
+				});
+				
+				//点击按钮从相册选择照片
+				document.getElementById('zp').addEventListener("tap",function(){
+					plus.gallery.pick(function(path){
+						zpPath=path;
+						var zpArr=path.split('/');
+						zpName=zpArr[zpArr.length-1];
+						//console.log(zpName);
+						//处理图片
+						appendFile(zpPath);
+					},function(error){
+						console.log("取消相册选择");
+					},{filter:"image"});
+				});
+				//提交表单信息到服务器
+				document.getElementById("submit").addEventListener("tap",function(){
+					//创建记录  获取id 上传头像 启动流程
+					//向表单中插入信息记录
+					xm=document.getElementById('xm').value;
+					xb=document.getElementById('xb').value;
+					nl=document.getElementById('nl').value;
+					//zyb=document.getElementById('zyb').value;
+					//zy=document.getElementById('zy').value;
+					//bj=document.getElementById('bj').value;
+					//sxgljs=document.getElementById('sxgljs').value;
+					sg=document.getElementById('sg').value;
+					tz=document.getElementById('tz').value;
+					xx=document.getElementById('xx').value;
+					jtdz=document.getElementById('jtdz').value;
+					lxdh=document.getElementById('lxdh').value;
+					qq=document.getElementById('qq').value;
+					wx=document.getElementById('wx').value;
+					yx=document.getElementById('yx').value;
+					fqxm=document.getElementById('fqxm').value;
+					fqlxdh=document.getElementById('fqlxdh').value;
+					mqxm=document.getElementById('mqxm').value;
+					mqlxdh=document.getElementById('mqlxdh').value;
+					insertIntoJL(xm,xb,nl,zyb,zy,bj,sxgljs,sg,tz,xx,jtdz,lxdh,qq,wx,yx,fqxm,fqlxdh,mqxm,mqlxdh);
+					//console.log(xm+"-----"+xb);
+			});
+			});
+			//获取当前用户的基本信息
+			function getJBXX(){
+				mui.ajax({
+					url : HOSTURL+"Query",
+					type : "POST",
+					dataType : "json",
+					data : {
+							sessionId : SESSIONID,
+							objectName : "E_XSJBXX",
+							params : null,
+							condition : "ID="+XSID,
+							queryOptionStr: JSON.stringify({
+								batchNo : 1,
+								batchSize : 20,
+								valueOption : 2,
+								orderBy : "",
+								queryId : ""
+							})
+					},
+					success:function(msg){
+							//console.log(JSON.stringify(msg));
+							if(msg.result==1){
+								var data=msg.keyValues[0];
+								var xmStr=data.xm;
+      							var xmArr=splitStr(xmStr);
+      							document.getElementById("xm").value=xmArr[0];
+      							var xbStr=data.xb;
+      							var xbArr=splitStr(xbStr);
+      							document.getElementById('xb').value=xbArr[0];
+      							var nlStr=data.nl;
+      							var nlArr=splitStr(nlStr);
+      							document.getElementById('nl').value=nlArr[0];
+      							var zybStr=data.zyb;
+      							var zybArr=splitStr(zybStr);
+      							zyb=zybArr[0];
+      							document.getElementById('zyb').innerHTML=zybArr[1];
+      							var zyStr=data.zy;
+      							var zyArr=splitStr(zyStr);
+      							zy=zyArr[0];
+      							document.getElementById('zy').innerHTML=zyArr[1];
+      							var bjStr=data.bj;
+      							var bjArr=splitStr(bjStr);
+      							bj=bjArr[0];
+      							document.getElementById('bj').innerHTML=bjArr[1];
+      							var sgStr=data.sg;
+      							var sgArr=splitStr(sgStr);
+      							document.getElementById('sg').value=sgArr[0];
+      							var tzStr=data.tz;
+      							var tzArr=splitStr(tzStr);
+      							document.getElementById('tz').value=tzArr[0];
+      							var xxStr=data.xx;
+      							var xxArr=splitStr(xxStr);
+      							document.getElementById('xx').value=xxArr[0];
+      							var jtdzStr=data.jtdz;
+      							var jtdzArr=splitStr(jtdzStr);
+      							document.getElementById('jtdz').value=jtdzArr[0];
+      							var lxdhStr=data.lxdh;
+      							var lxdhArr=splitStr(lxdhStr);
+      							document.getElementById('lxdh').value=lxdhArr[0];
+      							var qqStr=data.qq;
+      							var qqArr=splitStr(qqStr);
+      							document.getElementById('qq').value=qqArr[0];
+      							var wxStr=data.wx;
+      							var wxArr=splitStr(wxStr);
+      							document.getElementById('wx').value=wxArr[0];
+      							var yxStr=data.yx;
+      							var yxArr=splitStr(yxStr);
+      							document.getElementById('yx').value=yxArr[0];
+      							var fqxmStr=data.fqxm;
+      							var fqxmArr=splitStr(fqxmStr);
+      							document.getElementById('fqxm').value=fqxmArr[0];
+      							var fqlxdhStr=data.fqlxdh;
+      							var fqlxdhArr=splitStr(fqlxdhStr);
+      							document.getElementById('fqlxdh').value=fqlxdhArr[0];
+      							var mqxmStr=data.mqxm;
+      							var mqxmArr=splitStr(mqxmStr);
+      							document.getElementById('mqxm').value=mqxmArr[0];
+      							var mqlxdhStr=data.mqlxdh;
+      							var mqlxdhArr=splitStr(mqlxdhStr);
+      							document.getElementById('mqlxdh').value=mqlxdhArr[0];
+							}
+						},
+						error:function(xhr,type,errorThrow){
+      					console.log("getYHJBXX"+xhr+"---"+type+"---"+errorThrow);
+      				}
+				});
+			}
+			////向表单中插入信息记录
+			function insertIntoJL(xm,xb,nl,zyb,zy,bj,sxgljs,sg,tz,xx,jtdz,lxdh,qq,wx,yx,fqxm,fqlxdh,mqxm,mqlxdh){
+				mui.ajax({
+						url :HOSTURL+"addJL",
+						type : "POST",
+						dataType : "json",
+						data : {
+							sessionId : SESSIONID,
+							objectName : "WO_XSXXXG",
+							params :JSON.stringify({
+								xs : XSID,
+								xm : xm,
+								xb : xb,
+								nl : nl,
+								zyb : zyb,
+								zy : zy,
+								bj : bj,
+								sxgljs : sxgljs,
+								sg : sg,
+								tz : tz,
+								xx : xx,
+								jtdz : jtdz,
+								lxdh : lxdh,
+								qq : qq,
+								wx : wx,
+								yx : yx,
+								fqxm : fqxm,
+								fqlxdh : fqlxdh,
+								mqxm : mqxm,
+								mqlxdh : mqlxdh
+							})
+						},
+						success:function(msg){
+							//获取表单id 添加头像附件 再发起流程
+							if(msg.result==1){
+								bdjlID=msg.id;
+								if(zpBase64!=null){
+									uploadHeadImage(msg.id);
+									console.log("have image");
+								}else{
+									startProcess();
+									console.log("not image start");
+								}
+								
+							}
+							
+						},
+						error:function(xhr,type,errorThrow){
+      					console.log("insertInto"+xhr+"---"+type+"---"+errorThrow);
+      				}
+					});
+			}
+			//上传头像
+			function uploadHeadImage(jlid){
+					mui.ajax({
+						url:HOSTURL+"putDocument",
+						type : "POST",
+						dataType : "json",
+						data : {
+							sessionId :SESSIONID,
+							objectName : "WO_XSXXXG",
+							columnName : "zp",
+							documentStr : JSON.stringify({
+								filename : zpName,
+								length : 100,    //文件大小暂时固定用100
+								dataStr : zpBase64
+							}),
+							id : jlid
+						},
+						success:function(msg){
+							console.log(JSON.stringify(msg));
+							if(msg.result==1){
+								//启动信息修改流程
+								startProcess();
+							}else{
+								console.log("上传头像失败");
+							}
+						},
+						error:function(xhr,type,errorThrow){
+      					console.log("uploadHeadImage"+xhr+"---"+type+"---"+errorThrow);
+      				}
+					
+				
+				});
+			}
+			function startProcess(){
+				mui.ajax(HOSTURL + 'doWorkActionByObject', {
+							data: {
+								sessionId:SESSIONID,
+								objectName : 'WO_XSXXXG',
+								id : bdjlID,
+								actionId : 8,
+								params : null,
+								caller : YHID,
+								summary : ''
+							},
+							crossDomain: true,
+							dataType: 'json', //服务器返回html格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 5000, //超时时间设置为10秒；
+							success: function(data) {
+								console.log(JSON.stringify(data));
+								var dt = data;
+								if(dt.result == 1){
+									plus.nativeUI.toast("提交成功！");
+									var self=plus.webview.currentWebview();
+									self.close();
+								}else{
+									plus.nativeUI.toast("提交失败！");
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								console.log(type);
+								plus.nativeUI.toast("提交失败！");
+							}
+						});
+			}
+			
+			//压缩图片
+			function appendFile(path){
+				//console.log(path);
+				var img=new Image();
+				img.onload=function(){
+					var that=this;
+					var w=that.width,
+						h=that.height,
+						scale=w/h;
+						w=50;//压缩宽度
+						h=w/scale;
+						//生成canvas
+						var canvas=document.createElement('canvas');
+						var ctx=canvas.getContext('2d');
+						canvas.width=w;
+						canvas.height=h;
+						ctx.drawImage(that,0,0,w,h);
+						var base64=canvas.toDataURL('image/jpeg',0.8);
+						zpBase64=base64;
+						var img1=document.getElementById('getzp');
+						img1.src=base64;
+						
+				}
+				img.src=path;
+				//zpLength=img.fileSize;
+				//console.log("zplength:"+zpLength);
+			}
+		</script>
+	</body>
+
+</html>

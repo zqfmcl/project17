@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar .mui-pull-left .mui-icon {
+				padding-right: 5px;
+				font-size: 28px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.mui-bar .mui-btn {
+				font-weight: normal;
+				font-size: 17px;
+			}
+			
+			.mui-bar .mui-btn-link {
+				top: 1px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">签约申请</h1>
+		</header>
+		<div class="mui-content">
+			<ul>
+				<li>学生：
+					<span id="xs"></span>
+				</li>
+				<li>身份证号：<span id="xh"></span>
+				</li>
+				<li>专业部：<span id="zybmc"></span></li>
+				<li>专业：<span id="zymc"></span></li>
+				<li>班级：<span id="bj"></span></li>
+				<li>申请企业：<span id="qymc"></span></li>
+				<li>申请岗位：<span id="zwmc"></span></li>
+			</ul>
+		</div>
+		<div class="mui-bar mui-bar-footer">
+			<button id='submit' class="mui-btn mui-btn-block mui-btn-primary">提交</button>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<script type="text/javascript">
+			(function($, doc) {
+				var zwmc = "";
+				var zwid = "";
+				var qyid = "";
+				var qymc = "";
+				var account = "";
+				var sqxx = {};
+				$.init({
+					statusBarBackground: '#f7f7f7'
+				});
+				$.plusReady(function() {
+					setCharacters();
+					var self = plus.webview.currentWebview();
+					var state = app.getState();
+					account = state.account;
+					zwmc = self.zwmc;
+					zwid = self.zwid;
+					qyid = self.qyid;
+					qymc = self.qymc;
+					var subbtn = doc.getElementById("submit");
+					sqxx.qyid = qyid;
+					sqxx.zwid = zwid;
+					doc.getElementById("xs").innerHTML = XM;
+					doc.getElementById("xh").innerHTML = XH;
+					doc.getElementById("zybmc").innerHTML = ZYBNAME;
+					doc.getElementById("zymc").innerHTML = ZYNAME;
+					doc.getElementById("bj").innerHTML = BJNAME;
+					doc.getElementById("qymc").innerHTML = qymc;
+					doc.getElementById("zwmc").innerHTML = zwmc;
+
+					subbtn.addEventListener('tap', function(event) {
+						mui.ajax(HOSTURL + 'doWorkAction', {
+							data: {
+								sessionId:SESSIONID,
+								workflowName : 'WF_XSSXSQGZL',
+								instanceId : -1,
+								actionId : 4,
+								params : JSON.stringify({
+									xs : XSID,
+									xh : XH,
+									zyb : ZYBID,
+									zy : ZYID,
+									bj : BJID,
+									sqqy : qyid,
+									sqgw : zwid
+									//sqsj : getNowFormatDate()
+								}),
+								caller : YHID,
+								summary : ''
+							},
+							crossDomain: true,
+							dataType: 'json', //服务器返回html格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 5000, //超时时间设置为10秒；
+							success: function(data) {
+								//console.log(data);
+								var dt = JSON.parse(data);
+								if(dt.result == 1){
+									plus.nativeUI.toast("提交成功！");
+									var self=plus.webview.currentWebview();
+									self.close();
+								}else{
+									plus.nativeUI.toast("提交失败！");
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								console.log(type);
+								plus.nativeUI.toast("提交失败！");
+							}
+						});
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar .mui-pull-left .mui-icon {
+				padding-right: 5px;
+				font-size: 28px;
+			}
+			
+			.mui-bar .mui-btn {
+				font-weight: normal;
+				font-size: 17px;
+			}
+			
+			.mui-bar .mui-btn-link {
+				top: 1px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"></h1>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">招聘</button>
+		</header>
+		<div class="mui-content">
+			<ul>
+				<li>企业名称：
+					<a id="qylj"><span id="qymc"></span></a>
+				</li>
+				<li>企业简介：
+					<div id="qyjj"></div>
+				</li>
+				<li>企业规模：<span id="qygm"></span></li>
+				<li>企业评分：<span id="qypf"></span></li>
+				<li>企业联系电话：<span id="qydh"></span></li>
+				<li>qq：<span id="qyqq"></span></li>
+				<li>微信：<span id="qywx"></span></li>
+				<li>工作地址：<span id="qydz"></span></li>
+			</ul>
+		</div>
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<script type="text/javascript">
+			(function($, doc) {
+				var qymc = "";
+				var qyid = "";
+				$.init({
+					statusBarBackground: '#f7f7f7'
+				});
+				$.plusReady(function() {
+					setCharacters();
+					var self = plus.webview.currentWebview();
+					qymc = self.qymc;
+					qyid = self.qyid;
+					plus.storage.setItem('zwlb_qyid',qyid+'');
+					plus.storage.setItem('zwlb_qymc',qymc);
+					var table = document.body.querySelector('.mui-title');
+					var zp = document.body.querySelector('.mui-pull-right');
+					table.innerHTML = qymc;
+					mui.ajax(HOSTURL + 'Query', {
+						data: {
+							sessionId : SESSIONID,
+							objectName : "E_QYJBXX",
+							params : null,
+							condition : "ID="+qyid,
+							queryOptionStr: JSON.stringify({
+								batchNo : 1,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						crossDomain: true,
+						dataType: 'html', //服务器返回html格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 5000, //超时时间设置为10秒；
+						success: function(data) {
+							var dt = JSON.parse(data).keyValues[0];
+							doc.getElementById("qymc").innerHTML = '<br>'+dt['qymc'];
+							doc.getElementById("qylj").href ='<br>'+ dt['qylj'];
+							doc.getElementById("qyjj").innerHTML = '<br>'+dt['qyjj'];
+							doc.getElementById("qygm").innerHTML = '<br>'+dt['qygm'];
+							doc.getElementById("qypf").innerHTML = '<br>'+dt['qypf'];
+							doc.getElementById("qydh").innerHTML = '<br>'+dt['lxfs1'];
+							doc.getElementById("qyqq").innerHTML = '<br>'+dt['qq'];
+							doc.getElementById("qywx").innerHTML = '<br>'+dt['wx'];
+							doc.getElementById("qydz").innerHTML = '<br>'+dt['gzdz'];
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(type);
+						}
+					});
+					zp.addEventListener('tap', function(event) {
+						mui.openWindow({
+							url: 'zwlb_f.html',
+							id: 'zwlb_f.html',
+							styles: {
+								top : '0px'
+							},
+							createNew: false, //是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+							show: {
+								event: 'titleUpdate', //页面显示时机，默认为titleUpdate事件时显示
+							},
+							waiting: {
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						});
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

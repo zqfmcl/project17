@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="WXLBStation"
+  id="myeclipse.1489115898763"
+  context-root="/WXLBStation"
+  j2ee-spec="6.0"
+  archive="WXLBStation.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

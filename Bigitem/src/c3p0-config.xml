@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c3p0-config>
+  <named-config name="oracle">  
+        <property name="driverClass">oracle.jdbc.driver.OracleDriver</property>  
+        <!-- <property name="jdbcUrl">jdbc:oracle:thin:@191.168.0.10:1521:orcl</property>   -->
+        <property name="jdbcUrl">jdbc:oracle:thin:@218.56.106.155:1521:orcl</property>  
+        <property name="user">bigitem</property>  
+        <property name="password">apexsoft</property>  
+        <property name="initialPoolSize">15</property>  
+        <property name="maxIdleTime">30</property>  
+        <property name="maxPoolSize">50</property>  
+        <property name="minPoolSize">15</property>  
+        <property name="maxStatements">200</property>  
+    </named-config>
+</c3p0-config>

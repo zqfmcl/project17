@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar .mui-pull-left .mui-icon {
+				padding-right: 5px;
+				font-size: 28px;
+			}
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			.mui-bar .mui-btn {
+				font-weight: normal;
+				font-size: 17px;
+			}
+			
+			.mui-bar .mui-btn-link {
+				top: 1px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"></h1>
+		</header>
+		<div class="mui-content">
+			<ul>
+				<li>招聘岗位：
+					<span id="zpgw"></span>
+				</li>
+				<li>岗位要求：
+					<div id="gwyq"></div>
+				</li>
+				<li>人数：<span id="rs"></span></li>
+				<li>待遇：<span id="dy"></span></li>
+				<li>薪资：<span id="xz"></span></li>
+				<li>福利：<span id="fl"></span></li>
+				<li>食宿：<span id="ss"></span></li>
+				<li>所属企业：<span id="qymc"></span></li>
+			</ul>
+		</div>
+		<div class="mui-bar mui-bar-footer">
+			<button id='shenq' class="mui-btn mui-btn-block mui-btn-primary">申请</button>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<script type="text/javascript">
+			(function($, doc) {
+				var zwmc = "";
+				var zwid = "";
+				var qyid = "";
+				var qymc = "";
+				$.init({
+					statusBarBackground: '#f7f7f7'
+				});
+				$.plusReady(function() {
+					setCharacters();
+					var self = plus.webview.currentWebview();
+					zwmc = self.zwmc;
+					zwid = self.zwid;
+					qymc=self.qymc;
+					qyid=self.qyid;
+					var table = doc.body.querySelector('.mui-title');
+					var sq = doc.getElementById("shenq");
+					table.innerHTML = zwmc;
+					mui.ajax(HOSTURL + 'Query', {
+						data: {
+							sessionId : SESSIONID,
+							objectName : "E_QYZPXX",
+							params : null,
+							condition : "ID="+zwid,
+							queryOptionStr: JSON.stringify({
+								batchNo : 1,
+								batchSize : 20,
+								valueOption : 0,
+								orderBy : "",
+								queryId : ""
+							})
+						},
+						crossDomain: true,
+						dataType: 'html', //服务器返回html格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 5000, //超时时间设置为10秒；
+						success: function(data) {
+							var dt = JSON.parse(data).keyValues[0];
+							doc.getElementById("zpgw").innerHTML = dt['zpgw'];
+							doc.getElementById("gwyq").href = dt['gwyq'];
+							doc.getElementById("rs").innerHTML = dt['rs'];
+							doc.getElementById("dy").innerHTML = dt['dy'];
+							doc.getElementById("xz").innerHTML = dt['xz'];
+							doc.getElementById("fl").innerHTML = dt['fl'];
+							doc.getElementById("ss").innerHTML = dt['sstj'];
+							doc.getElementById("qymc").innerHTML = qymc;
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(xhr+"---"+type+"---"+errorThrown)
+						}
+					});
+					sq.addEventListener('tap',function(event){
+						mui.openWindow({
+					url: 'zwsq.html',
+					id: 'zwsq.html',
+					styles: {},
+					extras: {
+						zwid: zwid,
+						zwmc: zwmc,
+						qyid:qyid,
+						qymc:qymc
+					},
+					createNew: false, //是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+					show: {
+						event: 'titleUpdate', //页面显示时机，默认为titleUpdate事件时显示
+					},
+					waiting: {
+						title: '正在加载...', //等待对话框上显示的提示内容
+					}
+				});
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
